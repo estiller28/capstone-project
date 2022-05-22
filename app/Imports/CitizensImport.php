@@ -55,7 +55,7 @@ class CitizensImport implements ToCollection, WithHeadingRow, WithValidation
         $validatedData = ([
             'first_name'    => 'required|unique:citizens|max:255',
             'last_name'     => 'required',
-            'date_of_birth' => 'required'
+            'date_of_birth' => 'required',
 
         ]);
 

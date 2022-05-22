@@ -45,10 +45,11 @@ class TestController extends Controller
             ->addColumn('actions', function ($row){
                 return '<div class="btn-group"
                             <button class="btn btn-primary" data-id=" '.$row['id'].'"
-                            id="citizen-edit"><a href=""><i class="mr-3 text-primary fas fa-edit"></i></a></button>
+                            id="citizen_edit"><a href=""><i class="mr-3 text-primary fas fa-edit"></i></a></button>
                         </div>
                        <div class="btn-group"
-                              <button class="btn btn-primary"><a href="/admin/dashboard"><i class="mr-3 text-danger fas fa-archive"></i></a></button>
+                              <button class="btn btn-primary" data-id="'.$row['id'].'"
+                              id="citizen_delete"><a href=""><i class="mr-3 text-danger fas fa-archive"></i></a></button>
                        </div>';
             })
             ->rawColumns(['actions'])
@@ -77,11 +78,9 @@ class TestController extends Controller
         }
         else{
             $citizen = Citizen::find($citizen_id);
-
             $citizen->first_name = $request->first_name;
             $citizen->middle_name = $request->middle_name;
             $citizen->last_name = $request->last_name;
-
             $query = $citizen->save();
 
             if(!$query){
@@ -89,9 +88,18 @@ class TestController extends Controller
             }else{
                 return response()->json(['code' => 1, 'msg' => 'Citizen updated successfully']);
             }
-
         }
+    }
 
+    public function deleteCitizen(Request $request){
+        $citizen_id = $request->citizen_id;
+        $query = Citizen::find($citizen_id)->delete();
+
+        if($query){
+            return response()->json(['code' => 1, 'msg' => 'Citizen deleted successfully']);
+        }else{
+            return response()->json(['code' => 0, 'msg' => 'Something went wrong']);
+        }
 
     }
 }

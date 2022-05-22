@@ -110,6 +110,7 @@
             </div>
         </div>
 
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script src="{{ asset('plugins/datatables/jquery.dataTables.min.js') }}"></script>
         <script src="{{ asset('plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
         <script src="{{ asset('plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
@@ -123,6 +124,7 @@
                 }
             });
 
+            //Add Citizen
             $(function(){
                 $('#addCitizen').on('submit', function(e){
                     e.preventDefault();
@@ -156,9 +158,7 @@
                     });
                 });
 
-
-                //all citizens
-
+                //All citizens
                 $('#citizen-table').DataTable({
                     "responsive": true, "lengthChange": true, "autoWidth": false, "scrollX": false,
                     "search": {
@@ -181,14 +181,12 @@
                     ]
                 })
 
-                $(document).on('click', '#citizen-edit', function(e){
+                //Edit citizen
+                $(document).on('click', '#citizen_edit', function(e){
                     e.preventDefault();
 
                     var citizen_id = $(this).data('id');
 
-
-                    {{--$('.edit-data').find('form')[0].reset();--}}
-                    {{--$('.edit-data').find('span.error-text').text('');--}}
 
                     $.post('<?= route('citizenGet') ?>', {citizen_id:citizen_id}, function(data){
                         $('.edit-data').find('input[name="cid"]').val(data.details.id);
@@ -200,9 +198,7 @@
                     }, 'json');
                 });
 
-
                 //Update Citizen
-
                 $('#update-citizen-form').on('submit', function(e) {
                     e.preventDefault();
                     var form = this;
@@ -233,6 +229,42 @@
                         }
                     });
                 });
+
+                //Delete Citizen
+                $(document).on('click', '#citizen_delete', function (e){
+                    e.preventDefault();
+                    var citizen_id = $(this).data('id');
+
+                    var url = '<?= route('citizenDelete') ?>';
+
+                    swal.fire({
+                        title: "Are you sure?",
+                        icon: 'info',
+                        html: 'You want to <b>Delete</b> this citizen',
+                        showCancelButton: true,
+                        cancelButtonText: 'Cancel',
+                        confirmButtonText: 'Yes, Delete',
+                        cancelButtonColor: '#d33',
+                        confirmButtonColor: '#556ee6',
+                        width: 500,
+                        allowOutsideClick: false
+                    }).then(function(result){
+                        if(result.value){
+                            $.post(url, {citizen_id: citizen_id}, function (data){
+                                if(data.code == 1){
+                                    toastr.success(data.msg);
+                                    toastr.options.progressBar = true;
+                                    $('#citizen-table').DataTable().ajax.reload(null, false);
+
+                                }else{
+                                    toastr.error(data.msg);
+                                    toastr.options.progressBar = true;
+                                }
+                            }, 'json');
+                        }
+                    });
+                });
+
             });
         </script>
 

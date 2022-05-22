@@ -27,11 +27,12 @@ class CitizenController extends Controller
 
 
     public function dashboard(){
+
         $citizens = Citizen::where('barangay_id',$this->barangay())->with('barangay')->count();
 
-        $events = Events::select('id', 'start_date', 'event_name')->where('start_date', '>=', now())->count();
-
-
+        $events = Events::select('id', 'start_date', 'event_name')
+            ->where('barangay_id', $this->barangay())
+            ->where('start_date', '>=', now())->count();
 
         return view('admin.dashboard', compact( 'citizens', 'events'));
     }

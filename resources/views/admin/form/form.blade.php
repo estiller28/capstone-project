@@ -8,7 +8,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0 text-secondary">Generate Forms <span> <i class="ml-2 fas fa-users"></i></span></h1>
+                    <h1 class="m-0 ">Generate Forms <span><i class='bx bxs-receipt' ></i></span></h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -39,9 +39,8 @@
                                     <label for="select">Select Citizen</label>
                                     <div class="input-group">
                                         <select class="form-control select2" style="width: 100%;" name="citizen" required>
-                                            <option value="1" disabled>--Select Citizen--</option>
+                                            <option value="" selected="selected">--Select Citizen--</option>
                                             @forelse($citizens as $citizen)
-
                                                 <option value="{{$citizen->id}}">{{$citizen->full_name}}</option>
                                             @empty
                                                 <option value="">No Citizen found </option>
@@ -57,7 +56,7 @@
                                     <label for="select">Select Form</label>
                                     <div class="input-group">
                                         <select class="form-control select2" style="width: 100%;" name="form_name" required>
-                                            <option disabled>--Select Certicates--</option>
+                                            <option value="" selected="selected">--Select Certificates--</option>
                                             @forelse($certificates as $id => $certificate)
 
                                                 <option value="{{$id}}">{{$certificate}}</option>
@@ -75,7 +74,7 @@
                                     @if(empty($citizen))
                                         <button type="submit" class="btn btn-primary ml-2" disabled >Generate</button>
                                     @else
-                                        <button type="submit" class="btn btn-success ml-2" >Generate</button>
+                                        <button type="submit" class="btn btn-primary ml-2" >Generate</button>
                                     @endif
                                 </div>
                             </form>

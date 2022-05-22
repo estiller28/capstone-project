@@ -17,7 +17,7 @@ class CitizenImportTemplate implements WithHeadings, WithEvents
             'First Name',
             'Middle Name',
             'Last Name',
-            'Date of Birth'
+            'Date of Birth',
         ];
     }
 

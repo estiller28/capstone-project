@@ -35,7 +35,6 @@ Route::middleware(['guest'])->group( function () {
 //Route::get('/admin', function (){
 //   return view('layouts.admin');
 //});
-
 Route::middleware(['auth:sanctum','verified',])->group(function (){
     //Check Auth Dashboard
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
@@ -89,7 +88,11 @@ Route::middleware(['auth:sanctum','verified',])->group(function (){
 
         Route::prefix('settings')->group(function(){
             Route::get('/purok', [SettingsController::class, 'index'])->name('purok');
+            Route::get('/purok/all', [SettingsController::class, 'getPurok'])->name('purok.get');
             Route::post('/purok/add',[SettingsController::class, 'addPurok'])->name('purok.store');
+            Route::post('/get-purok', [SettingsController::class, 'getPurokDetails'])->name('purokGet');
+            Route::post('/update-purok', [SettingsController::class, 'updatePurok'])->name('purok.update');
+            Route::post('/delete-pruok', [SettingsController::class, 'deletePurok'])->name('purok.delete');
             Route::resource('/roles', RolesController::class);
             Route::get('/barangay_profile', [SettingsController::class, 'barangay'])->name( 'barangay');
         });
@@ -106,7 +109,7 @@ Route::middleware(['auth:sanctum','verified',])->group(function (){
         Route::get('/test/get', [TestController::class, 'getCitizen'])->name('citizen.get');
         Route::post('/test/get-citizen', [TestController::class, 'getCitizenDetails'])->name('citizenGet');
         Route::post('/test/update-citizen', [TestController::class, 'updateCitizen'])->name('citizenUpdate');
-
+        Route::post('/test/delete-citizen', [TestController::class, 'deleteCitizen'])->name('citizenDelete');
     });
 
 });

@@ -41,23 +41,23 @@ class EventsController extends Controller
         ]);
         Events::create($data);
 
-        $ch = curl_init();
-        $parameters = array(
-            'apikey' => 'c86311822755abc1c4e6af29b7f9903c',
-            'number' => '09109608070',
-            'message' => 'Test sms notification from Daniel ahaha',
-            'sendername' => 'SEMAPHORE'
-        );
-        curl_setopt( $ch, CURLOPT_URL,'https://semaphore.co/api/v4/messages' );
-        curl_setopt( $ch, CURLOPT_POST, 1 );
-
-        curl_setopt( $ch, CURLOPT_POSTFIELDS, http_build_query( $parameters ) );
-
-        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-        $output = curl_exec( $ch );
-        curl_close ($ch);
-
-        echo $output;
+//        $ch = curl_init();
+//        $parameters = array(
+//            'apikey' => 'c86311822755abc1c4e6af29b7f9903c',
+//            'number' => '09109608070',
+//            'message' => 'Test sms notification from Daniel ahaha',
+//            'sendername' => 'SEMAPHORE'
+//        );
+//        curl_setopt( $ch, CURLOPT_URL,'https://semaphore.co/api/v4/messages' );
+//        curl_setopt( $ch, CURLOPT_POST, 1 );
+//
+//        curl_setopt( $ch, CURLOPT_POSTFIELDS, http_build_query( $parameters ) );
+//
+//        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+//        $output = curl_exec( $ch );
+//        curl_close ($ch);
+//
+//        echo $output;
 
         $notification = ([
             'message' => 'Event created successfully',

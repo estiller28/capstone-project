@@ -179,7 +179,6 @@
                                             @endif
                                             <td>
                                                 <a href="{{url('citizen/edit/'.$citizen->id )}}"><i class="mr-3 text-primary fas fa-edit"></i></a>
-                                                <a href="{{url('citizen/view/'.$citizen->id )}}"><i class="mr-3 text-secondary fas fa-eye"></i></a>
                                                 <a href="{{url('citizen/delete/'.$citizen->id )}}"><i class="mr-3 text-danger fas fa-archive"></i></a>
                                             </td>
                                         </tr>
