@@ -14,6 +14,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{url('admin/dashboard')}}">Dashboard</a></li>
+                        <li class="breadcrumb-item ">Settings</li>
                         <li class="breadcrumb-item active">Puroks</li>
                     </ol>
                 </div>
@@ -41,7 +42,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="submit" id="btnSubmit" class="btn btn-primary">Save</button>
                     </div>
                 </form>
             </div>
@@ -146,6 +147,7 @@
             $('#addPurok').on('submit', function (e) {
                 e.preventDefault();
                 var form = this;
+                $('#btnSubmit').attr("disabled", true);
 
                 $.ajax({
                     url: $(form).attr('action'),
@@ -159,20 +161,24 @@
                     },
                     success: function (data) {
                         if (data.code == 0) {
+                            $('#btnSubmit').removeAttr("disabled");
                             $.each(data.error, function (prefix, val) {
                                 $(form).find('span.' + prefix + '_error').text(val[0]);
                             });
                         }if(data.code == 1){
+
                             $(form)[0].reset();
                             $('#purok_table').DataTable().ajax.reload(null, false);
                             $('#addPurok').removeClass('was-validated')
                             $('#purok_modal').modal('hide');
                             toastr.options.progressBar = true;
                             toastr.success(data.msg);
+                            $('#btnSubmit').removeAttr("disabled");
                         }
                         if(data.code == 2){
                             $(form)[0].reset();
                             $('.add-erorr').append("<span class='error-text text-danger'>Purok name already exists</span>");
+                            $('#btnSubmit').removeAttr("disabled");
                             $('#purok_table').DataTable().ajax.reload(null, false);
                         }
                     }

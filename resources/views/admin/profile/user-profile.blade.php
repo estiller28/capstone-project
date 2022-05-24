@@ -65,7 +65,7 @@
                     <div class="card card-primary card-outline">
                         <div class="card-body box-profile">
                             <div class="text-center">
-                                <img class="profile-user-img img-circle" style="width: 120px; height: 120px;"  src="{{ Auth::user()->profile_photo_url }}" alt="User profile picture">
+                                <img class="profile-user-img img-circle" style="width: 120px; height: 120px;"  src="{{ Auth::user()->profile_photo_url }}" alt="Daniel">
                             </div>
                             <h3 class="profile-username text-center">{{Auth::user()->name}}</h3>
 

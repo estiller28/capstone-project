@@ -76,7 +76,7 @@
                     </a>
                 </li>
                 <li class="nav-item"><li class="nav-item mb-2">
-                    <a href="" class="nav-link">
+                    <a href="{{ route('visitor.get') }}" class="nav-link {{ Request::is('visitor/all')? 'active': '' }}">
                         <i class='nav-icon bx bxs-book-content'></i>
                         <p>
                             Visitors Log Book

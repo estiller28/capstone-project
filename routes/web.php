@@ -11,6 +11,7 @@ use App\Http\Controllers\TestController;
 use App\Http\Controllers\Guest\CreateCitizenUser;
 use App\Http\Controllers\Admin\EventsController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VisitorsController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -29,21 +30,17 @@ Route::middleware(['guest'])->group( function () {
     Route::get('/register/citizen', [CreateCitizenUser::class, 'index'])->name('registerAsCitizen');
     Route::post('/register/new/citizen', [CreateCitizenUser::class, 'registerCitizen'])->name('register.citizen');
 
+
+
 });
 
-
-//Route::get('/admin', function (){
-//   return view('layouts.admin');
-//});
 Route::middleware(['auth:sanctum','verified',])->group(function (){
     //Check Auth Dashboard
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
 
-
     Route::middleware('role:User')->group(function(){
         Route::get('/user/dashboard', [CreateCitizenUser::class, 'userDashboard'])->name('userDashboard');
     });
-
 
     //Super Admin Routes
     Route::middleware('role:Super_Admin')->group(function(){
@@ -103,6 +100,12 @@ Route::middleware(['auth:sanctum','verified',])->group(function (){
             Route::post('/create', [EventsController::class, 'createEvent'])->name('event.create');
         });
 
+        //Visitors
+        Route::get('/visitor/all', [VisitorsController::class, 'visitorAll'])->name('visitor.get');
+        Route::get('/log-book', [VisitorsController::class, 'index']);
+        Route::post('visitor/create', [VisitorsController::class, 'create'])->name('visitor.create');
+
+        //Test
         Route::get('/test', [TestController::class, 'index']);
         Route::post('/test/add', [TestController::class, 'addCitizen'])->name('citizen.store');
         Route::get('/roles', [CitizenController::class,'getRoles']);

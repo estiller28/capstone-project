@@ -53,13 +53,17 @@ class SettingsController extends Controller
         ]);
 
         if (!$validator->passes()) {
-            return response()->json(['code' => 0, 'error' => $validator->errors()->toArray()]);
-        } else {
+            return response()->json([
+                'code' => 0, 'error' => $validator->errors()->toArray()
+            ]);
+
+        }else{
             if (!Purok::where('purok_name', '=', $request->purok_name)->exists()) {
                 $purok = Purok::insert([
                     'purok_name' => $request->purok_name,
                     'barangay_id' => $this->brgy(),
                 ]);
+
                 if (!$purok) {
                     return response()->json(['code' => 0, 'msg' => 'Something went wrong']);
                 } else {

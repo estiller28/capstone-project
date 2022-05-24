@@ -5,6 +5,7 @@ use App\Exports\CitizenImportTemplate;
 use App\Http\Controllers\Controller;
 use App\Models\Events;
 use App\Models\Purok;
+use App\Models\Visitor;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -27,14 +28,14 @@ class CitizenController extends Controller
 
 
     public function dashboard(){
-
         $citizens = Citizen::where('barangay_id',$this->barangay())->with('barangay')->count();
-
         $events = Events::select('id', 'start_date', 'event_name')
             ->where('barangay_id', $this->barangay())
             ->where('start_date', '>=', now())->count();
 
-        return view('admin.dashboard', compact( 'citizens', 'events'));
+        $visitor = Visitor::pluck('id')->count();
+
+        return view('admin.dashboard', compact( 'citizens', 'events', 'visitor'));
     }
     public function index(){
         $citizens = Citizen::where('barangay_id', $this->barangay())
@@ -104,10 +105,11 @@ class CitizenController extends Controller
 
     public function delete($id){
         Citizen::findorfail($id)->delete();
-        $notification = array(
+
+        $notification = [
             'message' => 'Citizen archived successfully',
             'alert-type' => 'warning',
-        );
+        ];
         return redirect()->back()->with($notification);
     }
 

@@ -9,5 +9,17 @@ class Visitor extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['first_name', 'last_name', 'address', 'purpose', 'image'];
+    protected $fillable = [
+        'first_name',
+        'last_name',
+        'address',
+        'phone',
+        'image',
+        'barangay_id',
+    ];
+
+
+    public function barangay(){
+        return $this->belongsTo(Barangay::class)->withDefault();
+    }
 }
