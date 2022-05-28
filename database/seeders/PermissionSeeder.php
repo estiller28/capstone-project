@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class PermissionSeeder extends Seeder
 {
@@ -16,16 +17,14 @@ class PermissionSeeder extends Seeder
     public function run()
     {
         $permissions = [
-            'settings',
-            'settings-purok',
-            'settings-barangay-profile',
-            'citizens',
-            'household',
-            'blotter-management',
-            'events',
-            'certificates',
-            'visitors',
-            'citizens-request',
+            'Settings',
+            'Citizens',
+            'Household Profiling',
+            'Blotter Management',
+            'Events',
+            'Certificates',
+            'Visitors Logbook',
+            'Citizens Request',
         ];
 
         foreach($permissions as $permission){

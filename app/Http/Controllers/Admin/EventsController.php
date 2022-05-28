@@ -10,6 +10,7 @@ use Humans\Semaphore\Laravel\Facade;
 use Humans\Semaphore\Laravel\SemaphoreMessage;
 use Humans\Semaphore\Laravel\SemaphoreChannel;
 use Humans\Semaphore\Message;
+use Illuminate\Support\Facades\Auth;
 
 class EventsController extends Controller
 {
@@ -38,6 +39,7 @@ class EventsController extends Controller
             'end_date'   => $request->end_date,
             'start_time' => date('H:i:s' , strtotime($request->start_time)),
             'end_time'   => date('H:i:s' , strtotime($request->end_time)),
+            'barangay_id' => Auth::user()->barangay_id,
         ]);
         Events::create($data);
 

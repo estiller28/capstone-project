@@ -31,7 +31,7 @@
                                 <div class="flex-1"> <strong>All Citizens</strong></div>
                                 <div>
                                     <a href="{{ url('/log-book') }}" target="_blank" class="btn btn-sm btn-primary mr-2">
-                                        <i class="mr-2 fa fa-download" aria-hidden="true"></i> Proceed to Logbook
+                                        <i class="mr-2 fas fa-sign-in"></i>Proceed to Logbook
                                     </a>
                                 </div>
                             </div>
@@ -46,6 +46,7 @@
                                     <td class="table-primary" scope="col">Last Name</td>
                                     <td class="table-primary" scope="col">Visitors Address</td>
                                     <td class="table-primary" scope="col">Phone Number</td>
+                                    <td class="table-primary" scope="col">Time</td>
                                     <td class="table-primary" scope="col">Date Visited</td>
                                 </tr>
                                 </thead>
@@ -58,11 +59,12 @@
                                         <td>{{ $visitor->last_name }}</td>
                                         <td>{{ $visitor->address }}</td>
                                         <td>{{ $visitor->phone }}</td>
+                                        <td>{{ $visitor->created_at->format('H:i:s')}}</td>
                                         <td>{{ \Carbon\Carbon::parse($visitor->created_at)->toFormattedDateString() }}</td>
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td>No data Available in table</td>
+                                        <td class="text-center" colspan="8">No data available in table </td>
                                     </tr>
                                 @endforelse
                                 </tbody>
@@ -84,11 +86,8 @@
         $(function () {
             $("#visitors_table").DataTable({
                 "responsive": true, "lengthChange": true, "autoWidth": false, "scrollX": false,
-                "pageLength": 4 ,
-                "search": {
-                    "caseInsensitive": true,
-                },
-                "": false,
+                "pageLength": 4,
+                  "order": [], "search": {"caseInsensitive": true,}, "": false,
             });
         });
     </script>

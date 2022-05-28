@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
 use Laravel\Jetstream\Jetstream;
+use Spatie\Permission\Models\Permission;
+
 class CreateNewUser implements CreatesNewUsers
 {
     use PasswordValidationRules;
@@ -61,7 +63,9 @@ class CreateNewUser implements CreatesNewUsers
             'email'         => $input['email'],
             'password'      => Hash::make($input['password']),
             'barangay_id'   => $barangay->id,
-        ])->assignRole('Admin');;
+        ])->assignRole('Admin');
+
+        $user->givePermissionTo(Permission::all());
 
         Citizen::create([
             'first_name'    => $input['first_name'],

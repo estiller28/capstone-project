@@ -19,12 +19,14 @@ class SettingsController extends Controller
     }
     public function index(){
 
+    // $this->authorize('settings');
+
         return view('admin.settings.purok');
 
     }
 
     public function getPurok(){
-        $purok = Purok::all('id', 'purok_name');
+        $purok = Purok::where('barangay_id', Auth::user()->barangay_id)->get();
         return DataTables::of($purok)
             ->addIndexColumn()
             ->addColumn('actions', function ($row){
@@ -42,7 +44,6 @@ class SettingsController extends Controller
 
     }
     public function barangay(){
-
         return view('admin.settings.barangay_profile');
     }
 

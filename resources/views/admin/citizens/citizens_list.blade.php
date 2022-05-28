@@ -54,7 +54,7 @@
                                     <td>{{$citizen->last_name}}</td>
                                     <td>{{$citizen->deleted_at}}</td>
                                     <td>
-                                        <a class="btn btn-info" href="{{url('citizen/restore/'.$citizen->id )}}">Restore</a>
+                                        <a class="btn btn-info" href="{{url('citizen/restore/'.$citizen->id)}}">Restore</a>
                                         <a class="btn btn-danger" href="{{url('citizen/force-delete/'.$citizen->id )}}">Delete Permanently</a>
                                     </td>
                                 </tr>
@@ -178,8 +178,8 @@
                                                 <td></td>
                                             @endif
                                             <td>
-                                                <a href="{{url('citizen/edit/'.$citizen->id )}}"><i class="mr-3 text-primary fas fa-edit"></i></a>
-                                                <a href="{{url('citizen/delete/'.$citizen->id )}}"><i class="mr-3 text-danger fas fa-archive"></i></a>
+                                                <a href="{{url('citizen/edit/ '.$citizen->id)}}"><i class="mr-3 text-primary fas fa-edit"></i></a>
+                                                <a id="archiveCitizen" href="{{url('citizen/delete/'.$citizen->id )}}"><i class="mr-3 text-danger fas fa-archive"></i></a>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -216,6 +216,12 @@
                 "": false,
             });
         });
+
+        // $('#archiveCitizen').on('click', function (){
+        //     e.preventDefault();
+        //
+        //     alert('clicked');
+        // })
     </script>
 
 

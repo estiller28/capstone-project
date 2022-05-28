@@ -38,7 +38,7 @@ Route::middleware(['auth:sanctum','verified',])->group(function (){
     //Check Auth Dashboard
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
 
-    Route::middleware('role:User')->group(function(){
+    Route::middleware(['role:User'])->group(function(){
         Route::get('/user/dashboard', [CreateCitizenUser::class, 'userDashboard'])->name('userDashboard');
     });
 
@@ -49,17 +49,15 @@ Route::middleware(['auth:sanctum','verified',])->group(function (){
 
 
     //Admin Routes
-    Route::middleware('role:Admin')->group(function(){
+    Route::middleware(['role:Admin'])->group(function(){
 
         Route::get('/admin/dashboard', [CitizenController::class, 'dashboard'])->name('adminDashboard');
 
-        Route::prefix('user')->group(function(){
-            Route::get('admin/user/profile', [UserController::class, 'profileShow'])->name('my.profile');
-            Route::post('change/password', [UserController::class, 'changePassword'])->name('password.change');
-        });
+        //Admin profile
+        Route::get('my/profile', [UserController::class, 'profileShow'])->name('myprofile');
+        Route::post('change/password', [UserController::class, 'changePassword'])->name('password.change');
 
         Route::prefix('citizen')->group(function(){
-            //dashboard
             //Citizen Controller
             Route::get('/all', [CitizenController::class, 'index'])->name('citizens');
             Route::get('/edit/{id}', [CitizenController::class, 'edit']);

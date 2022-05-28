@@ -13,6 +13,7 @@
                     </a>
                 </li>
 
+
                 <li class="nav-header mb-2 text-white">BARANGAY SETTINGS</li>
                 <li class="nav-item mb-2">
                     <a href="#" class="nav-link {{ Request::is('settings/*')? 'active': '' }}">
@@ -35,6 +36,7 @@
                         </li>
                     </ul>
                 </li>
+
                 <li class="nav-header mb-2 text-white">BARANGAY MANAGEMENT</li>
                 <li class="nav-item mb-2">
                     <a href="{{ route('citizens') }}" class="nav-link {{ Request::is('citizen/*')? 'active': '' }}">

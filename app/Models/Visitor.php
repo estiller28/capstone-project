@@ -20,6 +20,6 @@ class Visitor extends Model
 
 
     public function barangay(){
-        return $this->belongsTo(Barangay::class)->withDefault();
+        return $this->belongsTo(Barangay::class, 'barangay_id', 'id')->withDefault();
     }
 }

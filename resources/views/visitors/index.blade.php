@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Logbook</title>
+    <title>Barangay Aquino | Logbook</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
@@ -64,13 +64,11 @@
                             <label for="validationCustom02" class="form-label">Last name</label>
                             <input type="text" name="last_name" class="form-control" id="validationCustom02"  required aria-describedby="validationServer03Feedback">
                             <span class="text-danger error-text last_name_error"></span>
-
                         </div>
                         <div class="col-md-6">
                             <label for="validationCustom02" class="form-label">Address</label>
                             <input type="text" name="address" class="form-control" id="validationCustom02"  required aria-describedby="validationServer03Feedback">
                             <span class="text-danger error-text address_error"></span>
-
                         </div>
                         <div class="col-md-6">
                             <label for="validationCustom02" class="form-label">Contact Number</label>
@@ -90,9 +88,10 @@
     </div>
 </div>
 
+
+
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment-with-locales.min.js"></script>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
 
 <style>
@@ -101,6 +100,21 @@
         font-family: 'Poppins', sans-serif;
     }
 
+    .camera-circle {
+        background: #fff;
+        border: 10px solid #0BA1DD  ;
+        width: 300px;
+        height: 300px;
+        border-radius: 50%;
+        position: relative;
+        overflow: hidden;
+        right: 2%;
+        left: 0;
+    }
+    .error-text{
+        font-size: 13px;
+        font-weight: 600;
+    }
     .form-label{
         font-weight: 600 !important;
     }
@@ -127,21 +141,7 @@
         height: 100% !important;
     }
 
-    .camera-circle {
-        background: #fff;
-        border: 10px solid #0BA1DD  ;
-        width: 300px;
-        height: 300px;
-        border-radius: 50%;
-        position: relative;
-        overflow: hidden;
-        right: 2%;
-        left: 0;
-    }
-    .error-text{
-        font-size: 13px;
-        font-weight: 600;
-    }
+
 </style>
 
 <script>

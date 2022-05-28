@@ -70,7 +70,7 @@
             <ul class="dropdown-menu dropdown-menu-sm-left">
                 <span class="dropdown-header font-weight-bold"><h6 class="mt-2">{{ Auth::user()->name }}</h6></span>
 
-                <a href="{{ route('my.profile') }}" class="dropdown-item">
+                <a href="{{ route('myprofile') }}" class="dropdown-item">
                     <i class="nav-icon fas fa-user mr-3"></i> My Profile
                 </a>
 

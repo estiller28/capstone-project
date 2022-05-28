@@ -165,6 +165,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Humans\Semaphore\Laravel\ServiceProvider::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
+        Spatie\Permission\PermissionServiceProvider::class,
 
         /*
          * Package Service Providers...

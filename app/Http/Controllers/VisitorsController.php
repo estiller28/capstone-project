@@ -12,9 +12,7 @@ class VisitorsController extends Controller
         return view('visitors.index');
     }
 
-
     public function create(Request $request){
-
         $validator = \Validator::make($request->all(),[
             'first_name' => 'required',
             'last_name' => 'required',
@@ -47,6 +45,8 @@ class VisitorsController extends Controller
                 'address'       => $request->address,
                 'phone'         => $request->phone,
                 'image'         => $fileName,
+                'barangay_id'   => Auth::user()->barangay_id,
+
             ]);
 
             return response()->json([
@@ -56,8 +56,7 @@ class VisitorsController extends Controller
     }
 
     public function visitorAll(){
-        $visitors = Visitor::all();
-
+        $visitors = Visitor::where('barangay_id', Auth::user()->barangay_id)->latest()->get();
 
         return view('admin.visitor.visitor_list', compact('visitors'));
     }

@@ -18,18 +18,16 @@ class RoleSeeder extends Seeder
 
         $role = [
             'Super Admin',
-            'Admin',
             'User',
-            'Brgy. Captain',
-            'Brgy. Kagawad',
-            'Treasurer',
-            'Secretary',
-            'SK Chairman',
+            'Admin',
+            'Citizen',
         ];
 
         foreach ($role as $roles ){
             Role::create(['name' => $roles]);
         }
+
+
     }
 }
 

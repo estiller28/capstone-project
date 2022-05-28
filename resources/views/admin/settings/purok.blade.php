@@ -69,7 +69,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button id="btnEdit" type="submit" class="btn btn-primary">Save</button>
                     </div>
                 </form>
             </div>
@@ -179,7 +179,6 @@
                             $(form)[0].reset();
                             $('.add-erorr').append("<span class='error-text text-danger'>Purok name already exists</span>");
                             $('#btnSubmit').removeAttr("disabled");
-                            $('#purok_table').DataTable().ajax.reload(null, false);
                         }
                     }
                 });
@@ -204,6 +203,8 @@
                 e.preventDefault();
                 var form = this;
 
+                $('#btnEdit').attr('disabled', true);
+
                 $.ajax({
                     url: $(form).attr('action'),
                     method: $(form).attr('method'),
@@ -218,6 +219,7 @@
                         if(data.code == 0){
                             $.each(data.error, function (prefix, val) {
                                 $(form).find('span.' + prefix + '_error').text(val[0]);
+                                $('#btnEdit').attr('disabled', false);
                             });
 
                         }else if(data.code == 1) {
@@ -227,11 +229,13 @@
                             $('.edit-data').modal('hide');
                             toastr.options.progressBar = true;
                             toastr.success(data.msg);
+                            $('#btnEdit').attr('disabled', false);
 
                         }else{
                             $('.edit-data').find(form)[0].reset();
-                            $('.edit-error').append("<span class='error-text text-danger'>Purok name already exists</span>");
+                            $('.edit-error').append("<span class='error-text text-danger'>The purok name already exists</span>");
                             $('#purok_table').DataTable().ajax.reload(null, false);
+                            $('#btnEdit').attr('disabled', false);
                         }
                     }
                 });
@@ -255,7 +259,7 @@
                     cancelButtonColor: '#d33',
                     confirmButtonColor: '#556ee6',
                     width: 500,
-                    allowOutsideClick: false
+                    allowOutsideClick: true
                 }).then(function(result){
                     if(result.value){
                         $.post(url, {purok_id: purok_id}, function (data){

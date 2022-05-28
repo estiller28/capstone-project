@@ -13,6 +13,10 @@ use App\Models\Citizen;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\CitizensImport;
 use App\Exports\CitizensExport;
+use App\Models\User;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
+
 class CitizenController extends Controller
 {
     public $notification;
@@ -26,25 +30,23 @@ class CitizenController extends Controller
         return $barangay;
     }
 
-
     public function dashboard(){
-        $citizens = Citizen::where('barangay_id',$this->barangay())->with('barangay')->count();
-        $events = Events::select('id', 'start_date', 'event_name')
-            ->where('barangay_id', $this->barangay())
-            ->where('start_date', '>=', now())->count();
 
-        $visitor = Visitor::pluck('id')->count();
+        $citizens = Citizen::where('barangay_id',$this->barangay())->with('barangay')->count();
+        $events = Events::where('barangay_id', $this->barangay())->count();
+        $visitor = Visitor::where('barangay_id',$this->barangay())->pluck('id')->count();
 
         return view('admin.dashboard', compact( 'citizens', 'events', 'visitor'));
     }
     public function index(){
         $citizens = Citizen::where('barangay_id', $this->barangay())
                ->with('barangay', 'purok')->get();
-
         $deleted_citizens = Citizen::onlyTrashed()->latest()->paginate(5);
 
         return view('admin.citizens.citizens_list', compact('citizens','deleted_citizens'));
     }
+
+
 
     public function addCitizenView(){
 
@@ -80,12 +82,46 @@ class CitizenController extends Controller
 
     public function edit($id){
 
-        $citizens = Citizen::findorfail($id);
-        $puroks= Purok::where('barangay_id', $this->barangay())->get();
+        $citizen = Citizen::findOrFail($id);
 
-        return view('admin.citizens.citizens_edit', compact('citizens', 'puroks'));
+        $puroks= Purok::where('barangay_id', $this->barangay())->get();
+        $permissions = Permission::all();
+
+        $user = User::with('permissions')->where('id', $citizen->user_id)->first();
+        if($user){
+            $userPermissions =  $user->getAllPermissions();
+            return view('admin.citizens.citizens_edit', compact('citizen', 'userPermissions', 'permissions', 'user', 'puroks'));
+        }
+
+
+        $puroks= Purok::where('barangay_id', $this->barangay())->get();
+        return view('admin.citizens.citizens_edit', compact('citizen',  'user', 'puroks', 'permissions'));
 
     }
+    public function createAdmin(Request $request, $id){
+//        $request->validate([
+//            'email'         => ['required', 'string', 'email', 'max:255',],
+//            'password' => 'required|min:8|confirmed',
+//            'password_confirmation' => 'required|min:8'
+//
+//        ]);
+//        $user = User::find($id);
+//
+//        if($user->hasAnyPermission(Permission::all())){
+//            $user
+//        }else{
+//            User::create([
+//                'email' => $user
+//            ]);
+//        }
+
+
+
+
+
+
+    }
+
     public function update(Request $request, $id){
 
         Citizen::findOrfail($id)->update([
@@ -116,6 +152,11 @@ class CitizenController extends Controller
     public function view($id){
 
         $citizen = Citizen::findOrfail($id);
+
+
+
+        return $role;
+
         return view('admin.citizens.citizens_view', compact('citizen'));
     }
 
