@@ -362,8 +362,8 @@
 
 
         $(document).ready(function (){
-
             $('.adminBtn').hide();
+
             $('.role').on('change', function (){
                 if(this.value == '1'){
                     $('#adminDiv').show();
@@ -386,17 +386,13 @@
                 }
             });
 
-
             $('#btnEdit').on('click', function (){
                 $('.editData').removeAttr('disabled');
                 $("input").removeClass('.editData');
                 $("input").addClass('.form-control');
 
             })
-
         });
-
-
 
     </script>
 @endsection

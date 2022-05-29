@@ -17,10 +17,21 @@ class SettingsController extends Controller
         $barangay = Auth::user()->barangay_id;
         return $barangay;
     }
+    public function validatePurok(){
+        $purok = Purok::with('barangay')->where('barangay_id', $this->brgy())->pluck('purok_name')
+            ->toArray();
+
+        return $purok;
+    }
+
     public function index(){
 
-    // $this->authorize('settings');
+//     $this->authorize('settings');
 
+//        $purok = Purok::with('barangay')->where('barangay_id', $this->brgy())->pluck('purok_name')
+//        ->toArray();
+//
+//        return $purok;
         return view('admin.settings.purok');
 
     }
@@ -53,13 +64,18 @@ class SettingsController extends Controller
             'purok_name' => 'required|max:255',
         ]);
 
+//        $purok = Purok::with('barangay')->where('barangay_id', $this->brgy())->pluck('purok_name')
+//            ->toArray();
+
         if (!$validator->passes()) {
             return response()->json([
                 'code' => 0, 'error' => $validator->errors()->toArray()
             ]);
 
         }else{
-            if (!Purok::where('purok_name', '=', $request->purok_name)->exists()) {
+            if(!in_array($request->purok_name, $this->validatePurok())){
+//            if (!Purok::where('purok_name', $request->purok_name)->exists()) {
+                $randomId       =   rand(1,99999);
                 $purok = Purok::insert([
                     'purok_name' => $request->purok_name,
                     'barangay_id' => $this->brgy(),
@@ -78,7 +94,6 @@ class SettingsController extends Controller
 
     public function getPurokDetails(Request $request){
         $purok_id = $request->purok_id;
-
         $purok = Purok::find($purok_id);
 
         return response()->json(['details' => $purok]);
@@ -86,19 +101,14 @@ class SettingsController extends Controller
 
     public function updatePurok(Request $request){
         $purok_id = $request->purokId;
-
         $validator = \Validator::make($request->all(), [
             'purok_name' => 'required|max:255',
         ]);
-
-        $puroks = Purok::where('id', '!=', $purok_id)->pluck('purok_name')->toArray();
-
         if(!$validator->passes()){
             return response()->json(['code' => 0, 'error' => $validator->errors()->toArray()]);
         }
         else{
-
-            if(!in_array($request->purok_name, $puroks)){
+            if(!in_array($request->purok_name, $this->validatePurok())){
                 $purok = Purok::find($purok_id);
                 $purok->purok_name = $request->purok_name;
                 $purok->save();
@@ -122,7 +132,6 @@ class SettingsController extends Controller
 
         $purok_id = $request->purok_id;
         $deletePurok = Purok::find($purok_id)->delete();
-
         if($deletePurok){
             return response()->json(['code' => 1, 'msg' => 'Purok deleted successfully']);
         }else{

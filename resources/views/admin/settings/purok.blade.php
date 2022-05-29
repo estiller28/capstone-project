@@ -37,7 +37,7 @@
                     <div class="modal-body">
                         <div class="form-group add-erorr mb-4">
                             <label>Purok Name</label>
-                            <input type="text" name="purok_name" class="form-control" id="validationServer03"  required aria-describedby="validationServer03Feedback">
+                            <input type="text" name="purok_name" value="" class="form-control" id="validationServer03"  required aria-describedby="validationServer03Feedback">
                             <span class="text-danger error-text purok_name_error"></span>
                         </div>
                     </div>
@@ -221,16 +221,14 @@
                                 $(form).find('span.' + prefix + '_error').text(val[0]);
                                 $('#btnEdit').attr('disabled', false);
                             });
-
                         }else if(data.code == 1) {
                             $('.edit-data').find(form)[0].reset();
                             $('#purok_table').DataTable().ajax.reload(null, false);
                             $('#updatePurok').removeClass('was-validated')
                             $('.edit-data').modal('hide');
                             toastr.options.progressBar = true;
-                            toastr.success(data.msg);
+                            toastr.info(data.msg);
                             $('#btnEdit').attr('disabled', false);
-
                         }else{
                             $('.edit-data').find(form)[0].reset();
                             $('.edit-error').append("<span class='error-text text-danger'>The purok name already exists</span>");
@@ -242,7 +240,6 @@
             });
 
             //Delete Purok
-
             $(document).on('click', '#purok-delete', function (e){
                 e.preventDefault();
 
