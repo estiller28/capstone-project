@@ -4,7 +4,6 @@
 @section('title', 'Citizen')
 
 @section('content')
-
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
@@ -217,11 +216,6 @@
             });
         });
 
-        // $('#archiveCitizen').on('click', function (){
-        //     e.preventDefault();
-        //
-        //     alert('clicked');
-        // })
     </script>
 
 

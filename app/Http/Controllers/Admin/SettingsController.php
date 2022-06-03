@@ -24,20 +24,12 @@ class SettingsController extends Controller
         return $purok;
     }
 
-    public function index(){
-
-//     $this->authorize('settings');
-
-//        $purok = Purok::with('barangay')->where('barangay_id', $this->brgy())->pluck('purok_name')
-//        ->toArray();
-//
-//        return $purok;
+    public function purok(){
         return view('admin.settings.purok');
-
     }
 
     public function getPurok(){
-        $purok = Purok::where('barangay_id', Auth::user()->barangay_id)->get();
+        $purok = Purok::where('barangay_id', Auth::user()->barangay_id)->orderBy('id', 'asc')->get();
         return DataTables::of($purok)
             ->addIndexColumn()
             ->addColumn('actions', function ($row){

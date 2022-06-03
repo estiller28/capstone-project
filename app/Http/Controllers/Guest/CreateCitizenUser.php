@@ -42,7 +42,6 @@ class CreateCitizenUser extends Controller
                 'name'          => $request->first_name. ' '. $request->last_name,
                 'email'         => $request->email,
                 'password'      => Hash::make($request->password),
-
             ])->assignRole('User');
 
             Auth::guard('web')->login($user);

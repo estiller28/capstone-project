@@ -4,12 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Models\Citizen;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
+use App\Models\User;
 
 class TestController extends Controller
 {
     public function index(){
-        return view('admin.citizens.test');
+
+        $user = User::where('id', Auth::user()->id)->with('citizen')->first();
+        $citizen = Citizen::where('user_id', Auth::user()->id)->with('user')->first();
+        $profilePhoto = $citizen->user->profile_photo_url;
+
+        return view('admin.citizens.test', compact('citizen', 'profilePhoto', 'user'));
     }
     public function addCitizen(Request $request){
 

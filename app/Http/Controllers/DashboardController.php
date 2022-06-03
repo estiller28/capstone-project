@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Events;
+use App\Models\Visitor;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Citizen;
@@ -9,6 +11,18 @@ use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
+    public function barangay(){
+        $barangay = Auth::user()->barangay_id;
+        return $barangay;
+    }
+
+    public function index(){
+        $citizens = Citizen::where('barangay_id',$this->barangay())->with('barangay')->count();
+        $events = Events::where('barangay_id', $this->barangay())->count();
+        $visitor = Visitor::where('barangay_id',$this->barangay())->pluck('id')->count();
+        return view('admin.dashboard', compact( 'citizens', 'events', 'visitor'));
+    }
+
     public function dashboard(){
         if(Auth::check()){
             if(Auth::user()->hasRole('Super_Admin')){
@@ -21,7 +35,7 @@ class DashboardController extends Controller
                 return redirect()->route('userDashboard');
             }
         }else{
-            return view('homepage');
+            return view('auth.login');
         }
     }
 }

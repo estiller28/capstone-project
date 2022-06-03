@@ -63,7 +63,7 @@ class User extends Authenticatable
     ];
 
     public function citizen(){
-        return $this->belongsTo(Citizen::class, 'user_id', 'id');
+        return $this->belongsTo(Citizen::class, 'id', 'user_id');
     }
 
     public function barangay(){

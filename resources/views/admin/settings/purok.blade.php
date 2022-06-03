@@ -98,7 +98,7 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <table id="purok_table" class="table table-hover">
+                            <table id="purok_table" class="table table-striped table-hover">
                                 <thead>
                                 <td class="table-primary">Purok Name</td>
                                 <td width="5%" class="table-primary">Action</td>
@@ -113,7 +113,6 @@
             </div>
         </div>
     </div>
-
 
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('plugins/datatables/jquery.dataTables.min.js') }}"></script>
@@ -281,5 +280,4 @@
             font-size: 13px;
         }
     </style>
-
 @endsection

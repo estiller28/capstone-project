@@ -30,8 +30,6 @@ Route::middleware(['guest'])->group( function () {
     Route::get('/register/citizen', [CreateCitizenUser::class, 'index'])->name('registerAsCitizen');
     Route::post('/register/new/citizen', [CreateCitizenUser::class, 'registerCitizen'])->name('register.citizen');
 
-
-
 });
 
 Route::middleware(['auth:sanctum','verified',])->group(function (){
@@ -51,7 +49,7 @@ Route::middleware(['auth:sanctum','verified',])->group(function (){
     //Admin Routes
     Route::middleware(['role:Admin'])->group(function(){
 
-        Route::get('/admin/dashboard', [CitizenController::class, 'dashboard'])->name('adminDashboard');
+        Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('adminDashboard');
 
         //Admin profile
         Route::get('my/profile', [UserController::class, 'profileShow'])->name('myprofile');
@@ -71,9 +69,14 @@ Route::middleware(['auth:sanctum','verified',])->group(function (){
             Route::get('/download', [CitizenController::class, 'CitizensExport'])->name('export.citizen');
             Route::post('/import', [CitizenController::class, 'CitizensImport'])->name('import.citizen');
             Route::get('/template/download', [CitizenController::class, 'CitizensExportTemplate'])->name('template');
+
             //Recycle Bin
             Route::get('/restore/{id}', [CitizenController::class,'restore']);
             Route::get('/force-delete/{id}', [CitizenController::class, 'forceDelete']);
+
+            //User Access
+            Route::post('/edit/permission/{id}', [CitizenController::class, 'updateAdminPermission'])->name('permission.update');
+
         });
 
         Route::prefix('generate')->group(function(){
@@ -82,7 +85,7 @@ Route::middleware(['auth:sanctum','verified',])->group(function (){
         });
 
         Route::prefix('settings')->group(function(){
-            Route::get('/purok', [SettingsController::class, 'index'])->name('purok');
+            Route::get('/purok', [SettingsController::class, 'purok'])->name('purok');
             Route::get('/purok/all', [SettingsController::class, 'getPurok'])->name('purok.get');
             Route::post('/purok/add',[SettingsController::class, 'addPurok'])->name('purok.store');
             Route::post('/get-purok', [SettingsController::class, 'getPurokDetails'])->name('purokGet');
