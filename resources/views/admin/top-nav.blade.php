@@ -33,7 +33,7 @@
         <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#">
                 <i class="far fa-bell"></i>
-                <span class="badge badge-warning navbar-badge"></span>
+                <span class="ml-2 badge badge-danger navbar-badge"></span>
             </a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                 <span class="dropdown-header">No new notifications</span>
@@ -64,8 +64,8 @@
 
         <li class="nav-item dropdown user-menu">
             <a href="#" class="nav-link dropdown-toggle px-2" data-toggle="dropdown">
-                <span class="d-none d-md-inline">{{auth()->user()->name}}</span>
-                <img src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" class="user-image img-circle elevation-2">
+                <span class="mr-2 d-none d-md-inline">{{auth()->user()->name}}</span>
+                <img src="{{ Auth::user()->picture  }}" alt="{{ Auth::user()->name }}" class="user-image img-circle elevation-2 profile_picture">
             </a>
             <ul class="dropdown-menu dropdown-menu-sm-left">
                 <span class="dropdown-header font-weight-bold"><h6 class="mt-2">{{ Auth::user()->name }}</h6></span>

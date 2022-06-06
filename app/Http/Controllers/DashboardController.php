@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\Citizen;
 use Illuminate\Support\Facades\Auth;
 
+
 class DashboardController extends Controller
 {
     public function barangay(){
@@ -20,7 +21,8 @@ class DashboardController extends Controller
         $citizens = Citizen::where('barangay_id',$this->barangay())->with('barangay')->count();
         $events = Events::where('barangay_id', $this->barangay())->count();
         $visitor = Visitor::where('barangay_id',$this->barangay())->pluck('id')->count();
-        return view('admin.dashboard', compact( 'citizens', 'events', 'visitor'));
+        $users  = User::where('barangay_id',$this->barangay())->pluck('id')->count();
+        return view('admin.dashboard', compact( 'citizens', 'events', 'visitor', 'users'));
     }
 
     public function dashboard(){

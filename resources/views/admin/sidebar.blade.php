@@ -4,7 +4,7 @@
     <div class="sidebar" >
         <nav class="mt-3">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                <li class="nav-header mb-2 text-white">MAIN MENU</li>
+                <li class="nav-header text-white">MAIN MENU</li>
 
                 <li class="nav-item mb-2">
                     <a href="{{ route('adminDashboard') }}" class="nav-link {{ Request::is('admin/dashboard')? 'active': '' }}">
@@ -14,7 +14,7 @@
                 </li>
 
 
-                <li class="nav-header mb-2 text-white">BARANGAY SETTINGS</li>
+                <li class="nav-header mt-2 text-white">BARANGAY SETTINGS</li>
                 @can('Settings')
                 <li class="nav-item mb-2">
                     <a href="#" class="nav-link {{ Request::is('settings/*')? 'active': '' }}">
@@ -39,7 +39,16 @@
                 </li>
                 @endcan
 
-                <li class="nav-header mb-2 text-white">BARANGAY MANAGEMENT</li>
+                <li class="nav-header mt-2 text-white">BARANGAY MANAGEMENT</li>
+
+                <li class="nav-item mb-2">
+                    <a href="{{ route('users.index') }}" class="nav-link {{ Request::is('users*')? 'active': '' }}">
+                        <i class="nav-icon fa-solid fa-user"></i>
+                        <p>
+                            User Management
+                        </p>
+                    </a>
+                </li>
                 @can('Citizens')
                 <li class="nav-item mb-2">
                     <a href="{{ route('citizens') }}" class="nav-link {{ Request::is('citizen/*')? 'active': '' }}">
@@ -54,7 +63,7 @@
                 @can('Household Profiling')
                 <li class="nav-item mb-2">
                     <a href="" class="nav-link">
-                        <i class='nav-icon bx bxs-user-detail'></i>
+                        <i class="nav-icon fa-solid fa-id-card"></i>
                         <p>Household Profiling</p>
                     </a>
                 </li>
@@ -85,7 +94,7 @@
                 @can('Certificates')
                 <li class="nav-item mb-2">
                     <a href="{{ route('form') }}" class="nav-link {{ Request::is('generate/certificates')? 'active': '' }}">
-                        <i class="nav-icon  fas fa-book"></i>
+                        <i class="nav-icon fas fa-book"></i>
                         <p>
                             Certificates
                         </p>

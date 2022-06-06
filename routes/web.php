@@ -10,7 +10,8 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\Guest\CreateCitizenUser;
 use App\Http\Controllers\Admin\EventsController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\Admin\AdminProfileController;
+use App\Http\Controllers\Admin\UserManagementController;
 use App\Http\Controllers\VisitorsController;
 /*
 |--------------------------------------------------------------------------
@@ -52,15 +53,16 @@ Route::middleware(['auth:sanctum','verified',])->group(function (){
         Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('adminDashboard');
 
         //Admin profile
-        Route::get('my/profile', [UserController::class, 'profileShow'])->name('myprofile');
-        Route::post('change/password', [UserController::class, 'changePassword'])->name('password.change');
+        Route::get('my/profile', [AdminProfileController::class, 'profileShow'])->name('myprofile');
+        Route::post('change/password', [AdminProfileController::class, 'changePassword'])->name('password.change');
+        Route::post('/update/profile-photo', [AdminProfileController::class, 'updatePhoto'])->name('photo.update');
+
 
         Route::prefix('citizen')->group(function(){
             //Citizen Controller
             Route::get('/all', [CitizenController::class, 'index'])->name('citizens');
             Route::get('/edit/{id}', [CitizenController::class, 'edit']);
             Route::get('/delete/{id}', [CitizenController::class, 'delete']);
-            Route::get('/view/{id}', [CitizenController::class, 'view']);
             Route::post('/update/{id}', [CitizenController::class, 'update']);
             Route::get('/add/list', [CitizenController::class, 'addCitizenView'])->name('add.view');
             Route::post('/add', [CitizenController::class, 'addCitizen'])->name('store.citizen');
@@ -74,8 +76,11 @@ Route::middleware(['auth:sanctum','verified',])->group(function (){
             Route::get('/restore/{id}', [CitizenController::class,'restore']);
             Route::get('/force-delete/{id}', [CitizenController::class, 'forceDelete']);
 
-            //User Access
+            //Admin Access
             Route::post('/edit/permission/{id}', [CitizenController::class, 'updateAdminPermission'])->name('permission.update');
+
+            //User Access
+            Route::post('/add/user/{id}', [CitizenController::class, 'createCitizenUser'])->name('register.user');
 
         });
 
@@ -84,6 +89,7 @@ Route::middleware(['auth:sanctum','verified',])->group(function (){
             Route::post('/form/Certifacate of Indigency',[pdfController::class, 'generate'])->name('generate_form');
         });
 
+        //Settigns
         Route::prefix('settings')->group(function(){
             Route::get('/purok', [SettingsController::class, 'purok'])->name('purok');
             Route::get('/purok/all', [SettingsController::class, 'getPurok'])->name('purok.get');
@@ -93,6 +99,11 @@ Route::middleware(['auth:sanctum','verified',])->group(function (){
             Route::post('/delete-pruok', [SettingsController::class, 'deletePurok'])->name('purok.delete');
             Route::resource('/roles', RolesController::class);
             Route::get('/barangay_profile', [SettingsController::class, 'barangay'])->name( 'barangay');
+        });
+
+        //User Management
+        Route::prefix('users')->group(function(){
+            Route::get('/list', [UserManagementController::class, 'index'])->name('users.index');
         });
 
         //Events and Announcements

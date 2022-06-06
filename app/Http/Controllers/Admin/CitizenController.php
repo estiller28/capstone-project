@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+use App\Actions\Fortify\PasswordValidationRules;
 use App\Exports\CitizenImportTemplate;
 use App\Http\Controllers\Controller;
 use App\Models\Events;
@@ -10,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Citizen;
+use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\CitizensImport;
 use App\Exports\CitizensExport;
@@ -19,6 +21,8 @@ use Spatie\Permission\Models\Role;
 
 class CitizenController extends Controller
 {
+
+    use PasswordValidationRules;
     public $notification;
 
     public function Auth(){
@@ -33,7 +37,9 @@ class CitizenController extends Controller
     public function index(){
 
         $citizens = Citizen::where('barangay_id', $this->barangay())
-               ->with('barangay', 'purok')->get();
+            ->with('barangay', 'purok', 'user')->get();
+
+
         $deleted_citizens = Citizen::onlyTrashed()->latest()->paginate(5);
 
         return view('admin.citizens.citizens_list', compact('citizens','deleted_citizens'));
@@ -73,11 +79,12 @@ class CitizenController extends Controller
 
     public function edit($id){
 
-        $citizen = Citizen::findOrFail($id);
+        $citizen = Citizen::find($id);
         $puroks= Purok::where('barangay_id', $this->barangay())->get();
         $permissions = Permission::all();
 
         $user = User::with('permissions')->where('id', $citizen->user_id)->first();
+
         if($user){
             $userPermissions =  $user->getAllPermissions();
             return view('admin.citizens.citizens_edit', compact('citizen', 'userPermissions', 'permissions', 'user', 'puroks'));
@@ -102,11 +109,41 @@ class CitizenController extends Controller
 
         $notification = ([
             'message' => 'User permission updated successfully',
-            'alert-type' => 'success',
+            'alert-type' => 'info',
         ]);
         return redirect()->back()->with($notification);
     }
 
+    public function createCitizenUser(Request $request, $id){
+
+        $citizen = Citizen::find($id);
+        $request->validate([
+            'email' => 'required|unique:users',
+            'password' => $this->passwordRules(),
+        ]);
+
+
+        $user = User::create([
+            'name' => $citizen->first_name. ' '. $citizen->last_name,
+            'email' => $request->email,
+            'barangay_id' => $citizen->barangay_id,
+            'password' => Hash::make($request->password),
+        ]);
+        $user->assignRole('Citizen');
+
+        $citizen->user_id = $user->id;
+        $citizen->email = $user->email;
+
+        $citizen->save();
+
+        $notification = ([
+            'message' => 'User created successfully',
+            'alert-type' => 'info',
+        ]);
+
+        return redirect()->back()->with($notification);
+
+    }
 
     public function update(Request $request, $id){
 
@@ -135,14 +172,6 @@ class CitizenController extends Controller
         return redirect()->back()->with($notification);
     }
 
-    public function view($id){
-
-        $citizen = Citizen::findOrfail($id);
-
-        return $role;
-
-        return view('admin.citizens.citizens_view', compact('citizen'));
-    }
 
     public function restore($id){
         Citizen::withTrashed()->find($id)->restore();

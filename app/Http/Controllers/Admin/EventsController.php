@@ -11,6 +11,7 @@ use Humans\Semaphore\Laravel\SemaphoreMessage;
 use Humans\Semaphore\Laravel\SemaphoreChannel;
 use Humans\Semaphore\Message;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Citizen;
 
 class EventsController extends Controller
 {

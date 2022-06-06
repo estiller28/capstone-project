@@ -11,6 +11,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 class User extends Authenticatable
 {
     use HasApiTokens;
@@ -28,8 +29,10 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'picture',
         'password',
         'barangay_id'
+
     ];
 
     /**
@@ -53,14 +56,29 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+
+
     /**
      * The accessors to append to the model's array form.
      *
      * @var array
      */
-    protected $appends = [
-        'profile_photo_url',
-    ];
+//    protected $appends = [
+//        'profile_photo_url',
+//    ];
+
+    public function getPictureAttribute($value)
+    {
+        if($value){
+            return asset('user/'. $value);
+        }else{
+            return asset('user/avatar.png');
+        }
+
+    }
+
+
+
 
     public function citizen(){
         return $this->belongsTo(Citizen::class, 'id', 'user_id');
@@ -69,5 +87,7 @@ class User extends Authenticatable
     public function barangay(){
         return $this->belongsTo(Barangay::class);
     }
+
+
 
 }

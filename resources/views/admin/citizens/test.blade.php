@@ -109,7 +109,7 @@
                                 </div>
                                 <div class="text-right">
                                     <button type="submit" class="btn btn-primary" >Save</button>
-                                 </div>
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -118,11 +118,16 @@
         </div>
 
         <div class="row justify-content-between">
-
-            <img src="{{ $profilePhoto }}" alt="">
-            <h1>{{ $user->citizen->first_name . ' '. $user->citizen->last_name }}</h1>
+            <div class="col-md-6">
+                <h2>Add New Product</h2>
+            </div>
+            <div class="col-md-6">
+                <a class="btn btn-primary" href=""> Back</a>
+            </div>
         </div>
     </div>
+
+
 
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('plugins/datatables/jquery.dataTables.min.js') }}"></script>

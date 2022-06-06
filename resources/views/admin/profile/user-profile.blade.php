@@ -64,9 +64,11 @@
                 <div class="col-md-3">
                     <div class="card card-primary card-outline">
                         <div class="card-body box-profile">
-                            <div class="text-center">
-                                <img class="profile-user-img img-circle" style="width: 120px; height: 120px;"  src="{{ Auth::user()->profile_photo_url }}" alt="Daniel">
+                            <div class="text-center" id="change_profile">
+{{--                                <img class="profile-user-img img-circle" style="width: 120px; height: 120px;"  src="{{ asset('user/avatar.png') }}" alt="Daniel">--}}
+                                <img class="profile-user-img img-circle profile_picture" style="width: 120px; height: 120px;"  src="{{ Auth::user()->picture }}" alt="Daniel">
                             </div>
+                            <input type="file" id="profile_img" class="form-control" name="profile_image" style="display: none;">
                             <h3 class="profile-username text-center">{{Auth::user()->name}}</h3>
 
                             <p class="text-muted text-center">Bsit</p>
@@ -164,4 +166,43 @@
     <style>
 
     </style>
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        $(document).ready(function (){
+
+            $('#change_profile').on('click', function(){
+                $('#profile_img').click();
+            });
+
+            $('#profile_img').ijaboCropTool({
+                preview : '.profile_picture',
+                setRatio:1,
+                allowedExtensions: ['jpg', 'jpeg','png'],
+                buttonsText:['CROP','QUIT'],
+                buttonsColor:['#30bf7d','#ee5155', -15],
+                processUrl: '{{ route('photo.update') }}',
+                withCSRF:['_token','{{ csrf_token() }}'],
+                onSuccess:function(){
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success',
+                        text: 'Profile photo updated successfully',
+                        showConfirmButton: false,
+                        timer: 2000
+                    })
+                },
+                onError:function(message, element, status){
+                    Swal.fire({
+                        icon: 'error',
+                        title: message,
+                        text: 'File type should be JPG,JPEG or PNG',
+                        showConfirmButton: true,
+                        timer: 5000
+                    })
+                }
+            });
+        })
+    </script>
 @endsection

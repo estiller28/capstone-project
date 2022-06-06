@@ -22,7 +22,11 @@ class Citizen extends Authenticatable
         'user_id',
         'barangay_id',
         'purok_id',
+        'image'
     ];
+
+
+
 //    relationships
     public function user(){
       return $this->hasOne(User::class, 'id', 'user_id')->withDefault();
@@ -34,6 +38,15 @@ class Citizen extends Authenticatable
     public function purok(){
         return $this->belongsTo(Purok::class , 'purok_id', 'id')->withDefault();
     }
+
+//    public function getAttribute($value){
+//        if($value){
+//            return asset('storage/profile-photos/'. $value);
+//        }else{
+//            return asset('storage/profile-photos/');
+//        }
+//    }
+
 }
 
 
