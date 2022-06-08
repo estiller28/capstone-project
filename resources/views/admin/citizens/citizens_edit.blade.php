@@ -39,8 +39,12 @@
                     <div class="card card-primary card-outline">
                         <div class="card-body box-profile">
                             <div class="text-center" id="change_profile">
-                                <input type="hidden" name="citizen_id" id="citizen" value="{{ $citizen->id }}" data-id="{{ $citizen->id }}">
-                                <img class="profile-user-img img-circle" style="width: 120px; height: 120px;"  src="{{ asset('storage/profile-photos/UIMG20220605629c3384e677c.jpg') }}" alt="">
+                                <input type="hidden" name="citizen_id" id="citizen_id" value="{{ $citizen->id }}">
+                                @if(!$user == null)
+                                    <img class="profile-user-img img-circle" style="width: 120px; height: 120px;"  src="{{ $user->picture  }}" alt="">
+                                @else
+                                    <img id="change_profile" class="profile-user-img img-circle" style="width: 120px; height: 120px;"  src="{{ asset('user/avatar.png') }}" alt="">
+                                @endif
                             </div>
 
                             <h3 class="profile-username text-center">{{$citizen->first_name. ' '. $citizen->last_name}}</h3>
@@ -152,70 +156,114 @@
                                 <!-- /.tab-pane -->
                                 <div class="tab-pane" id="timeline">
                                     <div class="row justify-content-between">
+
+
                                         @if($citizen->user_id != null && $user != null)
-                                            <div class="col-md-4">
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <div class="card-title">
-                                                            <div class="card-label">
-                                                                Login Credentials
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <div class="form-group mb-4">
-                                                            <label>Role:</label>
-                                                            <select style="width: 100%;" name="roles" class="form-control role custom-select" id="roles"  required aria-describedby="validationServer03Feedback">
-                                                                <option value="1">Admin</option>
-                                                                <option value="2">Citizen</option>
-                                                            </select>
-                                                        </div>
-                                                        <input type="hidden" value="{{ $citizen->email }}">
-                                                        <div class="form-group mb-4">
-                                                            <label>Password:</label>
-                                                            <input type="password" name="password" class="form-control" id="password"  required aria-describedby="validationServer03Feedback" autocomplete="on">
-                                                            <span class="text-danger error-text purok_name_error"></span>
-                                                        </div>
-                                                        <div class="form-group mb-4">
-                                                            <label>Confirm Password:</label>
-                                                            <input type="password" name="passwordConfirm" class="form-control" id="confirm"  required aria-describedby="validationServer03Feedback" autocomplete="on">
-                                                            <span class="text-danger error-text purok_name_error"></span>
-                                                        </div>
-                                                        <div class="form-group mb-4 adminBtn">
-                                                            <button class="btn btn-sm btn-primary">Save User Access</button>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-6" id="adminDiv">
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <div class="card-title">
-                                                            <div class="card-label">
-                                                                User Access Permissions
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <form class="needs-validation" novalidate  action="{{ url('citizen/edit/permission/' . $citizen->id) }}" method="post" enctype="multipart/form-data">
-                                                        @csrf
-                                                        <div class="card-body">
-                                                            @foreach($permissions as $permission)
-                                                                <div class="form-check icheck-primary">
-                                                                    <input name="permission[]" class="form-check-input" type="checkbox" value="{{$permission->id}}" id="{{ $permission->id }}"
-                                                                           @if($user->hasPermissionTo($permission->id))   checked @endif  />
-                                                                    <label class="form-check-label" for="{{ $permission->id }}"> {{ $permission->name }}</label>
+                                            @if($user->hasRole('Admin'))
+                                                <div class="col-md-4">
+                                                    <div class="card">
+                                                        <div class="card-header">
+                                                            <div class="card-title">
+                                                                <div class="card-label">
+                                                                    Login Credentials
                                                                 </div>
-                                                            @endforeach
-                                                            <div class="form-group mt-5 text-right">
-                                                                <button type="submit" class="btn btn-sm btn-primary">Save User Access</button>
                                                             </div>
                                                         </div>
-                                                    </form>
+                                                        <div class="card-body">
+                                                            <form action="">
+                                                                <div class="form-group mb-4">
+                                                                    <label>Role:</label>
+                                                                    <select style="width: 100%;" name="roles" class="form-control role custom-select" id="roles"  required aria-describedby="validationServer03Feedback">
+                                                                        <option value="">Select User Type</option>
+                                                                        <option selected="selected" value="1">Admin</option>
+                                                                        <option  value="2">Citizen</option>
+                                                                    </select>
+                                                                </div>
+                                                                <input type="hidden" value="{{ $citizen->email }}">
+                                                                <div class="form-group mb-4">
+                                                                    <label>Password:</label>
+                                                                    <input type="password" name="password" class="form-control" id="password"  required aria-describedby="validationServer03Feedback" autocomplete="on">
+                                                                    <span class="text-danger error-text purok_name_error"></span>
+                                                                </div>
+                                                                <div class="form-group mb-4">
+                                                                    <label>Confirm Password:</label>
+                                                                    <input type="password" name="passwordConfirm" class="form-control" id="confirm"  required aria-describedby="validationServer03Feedback" autocomplete="on">
+                                                                    <span class="text-danger error-text purok_name_error"></span>
+                                                                </div>
+                                                                <div class="form-group mb-4 adminBtn">
+                                                                    <button class="btn btn-sm btn-primary">Save User Access</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
+
+                                                <div class="col-md-6" id="adminDiv">
+                                                    <div class="card">
+                                                        <div class="card-header">
+                                                            <div class="card-title">
+                                                                <div class="card-label">
+                                                                    User Access Permissions
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <form class="needs-validation" novalidate  action="{{ url('citizen/edit/permission/' . $citizen->id) }}" method="post" enctype="multipart/form-data">
+                                                            @csrf
+                                                            <div class="card-body">
+                                                                @foreach($permissions as $permission)
+                                                                    <div class="form-check icheck-primary">
+                                                                        <input name="permission[]" class="form-check-input" type="checkbox" value="{{$permission->id}}" id="{{ $permission->id }}"
+                                                                               @if($user->hasPermissionTo($permission->id))   checked @endif  />
+                                                                        <label class="form-check-label" for="{{ $permission->id }}"> {{ $permission->name }}</label>
+                                                                    </div>
+                                                                @endforeach
+                                                                <div class="form-group mt-5 text-right">
+                                                                    <button type="submit" class="btn btn-sm btn-primary">Save User Access</button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            @else
+                                                {{--                                                Citizen access--}}
+                                                <div class="col-md-4">
+                                                    <div class="card">
+                                                        <div class="card-header">
+                                                            <div class="card-title">
+                                                                <div class="card-label">
+                                                                    Login Credentials
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <div class="form-group mb-4">
+                                                                <label>Role:</label>
+                                                                <select style="width: 100%;" name="roles" class="form-control role custom-select" id="roles"  required aria-describedby="validationServer03Feedback">
+                                                                    <option  value="">Select User Type</option>
+                                                                    <option  value="1">Admin</option>
+                                                                    <option selected  value="2">Citizen</option>
+                                                                </select>
+                                                            </div>
+                                                            <input type="hidden" value="{{ $citizen->email }}">
+                                                            <div class="form-group mb-4">
+                                                                <label>Password:</label>
+                                                                <input type="password" name="password" class="form-control" id="password"  required aria-describedby="validationServer03Feedback" autocomplete="on">
+                                                                <span class="text-danger error-text purok_name_error"></span>
+                                                            </div>
+                                                            <div class="form-group mb-4">
+                                                                <label>Confirm Password:</label>
+                                                                <input type="password" name="passwordConfirm" class="form-control" id="confirm"  required aria-describedby="validationServer03Feedback" autocomplete="on">
+                                                                <span class="text-danger error-text purok_name_error"></span>
+                                                            </div>
+                                                            <div class="form-group mb-4 userBtn">
+                                                                <button class="btn btn-sm btn-primary">Save User Access</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endif
                                         @else
+                                            {{--                                            NO user_id--}}
                                             <div class="col-12">
                                                 <form class="needs-validation" novalidate action="{{ url('citizen/add/user/'. $citizen->id) }}" method="post">
                                                     @csrf
@@ -223,7 +271,6 @@
                                                         <div class="col-md-4">
                                                             <div class="card">
                                                                 <div class="card-header">
-
                                                                     <div class="card-title">
                                                                         <div class="card-label">
                                                                             Login Credentials
@@ -246,7 +293,7 @@
                                                                         @if($citizen->email != null)
                                                                             <input name="email" class="form-control" type="email" value="{{ $citizen->email }}">
                                                                         @else
-                                                                            <input name="email" class="form-control" type="email" value="">
+                                                                            <input name="email" class="form-control" type="email" value="" required>
                                                                         @endif
                                                                     </div>
                                                                     <div class="form-group mb-4">
@@ -261,7 +308,7 @@
                                                                         <span class="text-danger error-text purok_name_error"></span>
                                                                     </div>
                                                                     <div class="form-group mb-4 userBtn">
-                                                                        <button type="submit" class="btn btn-sm btn-primary">Save User Access</button>
+                                                                        <button type="submit" class="btn btn-sm btn-primary">Activate User Access</button>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -276,15 +323,17 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="card-body">
-                                                                    @foreach($permissions as $permission)
-                                                                        <div class="form-check icheck-primary">
-                                                                            <input name="permission[]" class="form-check-input" type="checkbox" value="" id="{{ $permission->id }}" />
-                                                                            <label class="form-check-label" for="{{ $permission->id }}">{{ $permission->name }}</label>
+                                                                    <form action="" method="">
+                                                                        @foreach($permissions as $permission)
+                                                                            <div class="form-check icheck-primary">
+                                                                                <input name="permission[]" class="form-check-input" type="checkbox" value="" id="{{ $permission->id }}" />
+                                                                                <label class="form-check-label" for="{{ $permission->id }}">{{ $permission->name }}</label>
+                                                                            </div>
+                                                                        @endforeach
+                                                                        <div class="form-group mt-5 text-right">
+                                                                            <button type="submit" class="btn btn-sm btn-primary">Activate User Access</button>
                                                                         </div>
-                                                                    @endforeach
-                                                                    <div class="form-group mt-5 text-right">
-                                                                        <button type="submit" class="btn btn-sm btn-primary">Save User Access</button>
-                                                                    </div>
+                                                                    </form>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -353,6 +402,7 @@
     </section>
 
     <script src="{{asset('plugins/jquery/jquery.min.js')}}"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{asset('plugins/select2/js/select2.full.min.js')}}"></script>
 
     <style>
@@ -391,6 +441,43 @@
             })
         });
 
+        $(document).ready(function (){
+
+            $('#change_profile').on('click', function(){
+                $('#profile_img').click();
+            });
+
+            var id = $('#citizen_id').val();
+
+            $('#profile_img').ijaboCropTool({
+                preview : '',
+                setRatio:1,
+                allowedExtensions: ['jpg', 'jpeg','png'],
+                buttonsText:['CROP','QUIT'],
+                buttonsColor:['#30bf7d','#ee5155', -15],
+                processUrl: '{{ route('citizen.updateProfile') }}',
+                withCSRF:['_token','{{ csrf_token() }}'],
+                onSuccess:function(){
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success',
+                        text: 'Profile photo updated successfully',
+                        showConfirmButton: false,
+                        timer: 2000
+                    })
+                },
+                onError:function(message, element, status){
+                    Swal.fire({
+                        icon: 'error',
+                        title: message,
+                        text: 'File type should be JPG,JPEG or PNG',
+                        showConfirmButton: true,
+                        timer: 5000
+                    })
+                }
+            });
+        })
+
 
         $(document).ready(function (){
             $('.adminBtn').hide();
@@ -416,7 +503,6 @@
                     $('#permissionDiv').hide();
                 }
             });
-
             $('#btnEdit').on('click', function (){
                 $('.editData').removeAttr('disabled');
                 $("input").removeClass('.editData');
@@ -424,8 +510,5 @@
 
             })
         });
-
-
-
     </script>
 @endsection

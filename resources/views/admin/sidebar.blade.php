@@ -42,13 +42,32 @@
                 <li class="nav-header mt-2 text-white">BARANGAY MANAGEMENT</li>
 
                 <li class="nav-item mb-2">
-                    <a href="{{ route('users.index') }}" class="nav-link {{ Request::is('users*')? 'active': '' }}">
-                        <i class="nav-icon fa-solid fa-user"></i>
-                        <p>
-                            User Management
-                        </p>
+                    <a href="#" class="nav-link {{ Request::is('users/*')? 'active': '' }}">
+                        <i class=" nav-icon fa-solid fa-user"></i>
+                        <p>User Management<i class="fas fa-angle-left right"></i></p>
                     </a>
+
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('users.index') }}" class="nav-link">
+                                <i class="ml-4 nav-icon fa-solid fa-user"></i>
+                                <p>
+                                    Manage Users
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="" class="nav-link">
+                                <i class="ml-4 nav-icon fa-solid fa-book"></i>
+                                <p>
+                                    User Logs
+                                </p>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
+
+
                 @can('Citizens')
                 <li class="nav-item mb-2">
                     <a href="{{ route('citizens') }}" class="nav-link {{ Request::is('citizen/*')? 'active': '' }}">
@@ -123,6 +142,15 @@
                     </a>
                 </li>
                 @endcan
+
+                <li class="nav-item"><li class="nav-item mb-2">
+                    <a href="" class="nav-link">
+                        <i class="nav-icon fas fa-user-edit"></i>
+                        <p>
+                            Generate Reports
+                        </p>
+                    </a>
+                </li>
             </ul>
         </nav>
     </div>

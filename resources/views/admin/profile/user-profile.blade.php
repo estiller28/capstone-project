@@ -152,9 +152,7 @@
                                 <!-- /.tab-pane -->
 
                                 <div class="tab-pane" id="settings">
-                                    Coming soon..
                                 </div>
-
                             </div>
                         </div>
                     </div>

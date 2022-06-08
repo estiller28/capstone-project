@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->string('middle_name')->nullable();
             $table->date('date_of_birth')->nullable();
-            $table->string('image')->nullable();
+            $table->string('picture')->nullable();
             $table->timestamps();
             $table->SoftDeletes();
         });

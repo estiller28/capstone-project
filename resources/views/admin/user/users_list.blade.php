@@ -52,19 +52,20 @@
                                         <td>{{ $user->id }}</td>
                                         <td>{{ $user->name }}</td>
                                         <td>{{ $user->email }}</td>
-
                                         <td>
                                             @if(!empty($user->getRoleNames()))
                                                 @foreach($user->getRoleNames() as $role)
-                                                    <label class="badge badge-success">{{ $role }}</label>
+                                                    @if($role == 'Admin')
+                                                        <label class="badge badge-success">{{ $role }}</label>
+                                                    @else
+                                                        <label class="badge badge-info">{{ $role }}</label>
+                                                    @endif
                                                 @endforeach
                                             @endif
                                         </td>
-
                                         <td>
                                             <a href="#"><i class="mr-3 text-danger fas fa-archive"></i></a>
                                         </td>
-
                                     </tr>
                                     </tbody>
                                 @endforeach

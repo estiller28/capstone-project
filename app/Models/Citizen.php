@@ -13,6 +13,7 @@ class Citizen extends Authenticatable
 
     protected $table = 'citizens';
     protected $primaryKey = 'id';
+
     protected $fillable = [
         'first_name',
         'middle_name',
@@ -22,8 +23,29 @@ class Citizen extends Authenticatable
         'user_id',
         'barangay_id',
         'purok_id',
-        'image'
+        'picture',
     ];
+
+
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+//    protected $appends = [
+//        'profile_photo_url',
+//    ];
+
+    public function getPictureAttribute($value)
+    {
+        if($value){
+            return asset('user/'. $value);
+        }else{
+            return asset('user/avatar.png');
+        }
+
+    }
 
 
 

@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 class UserManagementController extends Controller
 {
     public function index (){
-        $users = User::with('roles')->where('id', '!=', Auth::user()->id)
+        $users = User::with('roles')
             ->select('id', 'name', 'email')
             ->orderBy('id', 'asc')->get();
 

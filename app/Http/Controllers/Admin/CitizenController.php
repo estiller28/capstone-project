@@ -18,6 +18,7 @@ use App\Exports\CitizensExport;
 use App\Models\User;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use Symfony\Component\Console\Input\Input;
 
 class CitizenController extends Controller
 {
@@ -78,12 +79,11 @@ class CitizenController extends Controller
     }
 
     public function edit($id){
-
         $citizen = Citizen::find($id);
         $puroks= Purok::where('barangay_id', $this->barangay())->get();
         $permissions = Permission::all();
 
-        $user = User::with('permissions')->where('id', $citizen->user_id)->first();
+        $user = User::with('roles','permissions')->where('id', $citizen->user_id)->first();
 
         if($user){
             $userPermissions =  $user->getAllPermissions();
@@ -92,6 +92,39 @@ class CitizenController extends Controller
 
         $puroks= Purok::where('barangay_id', $this->barangay())->get();
         return view('admin.citizens.citizens_edit', compact('citizen',  'user', 'puroks', 'permissions'));
+
+    }
+
+    public function updateCitizenImage(Request $request){
+
+        $citizen = $request->input('citizen_id');
+        $path = 'user/';
+        $file = $request->file('profile_image');
+        $new_image_name = 'UIMG'.date('Ymd').uniqid().'.jpg';
+        $upload = $file->move(public_path($path), $new_image_name);
+
+        if(!$upload){
+            return response()->json(['status'=> 0, 'msg'=>'Something went wrong, try again later']);
+
+        }else{
+//
+            $oldPhoto = Citizen::find($citizen)->getAttributes()['picture'];
+
+
+
+            if($oldPhoto != ''){
+                if(\File::exists(public_path($path.$oldPhoto))){
+                    \File::delete(public_path($path.$oldPhoto));
+                }
+            }
+
+            $update = Citizen::find($citizen);
+
+            $update->picture = $new_image_name;
+
+            $update->save();
+            return response()->json(['status' => 1, 'msg' => 'Success']);
+        }
 
     }
 
@@ -121,7 +154,6 @@ class CitizenController extends Controller
             'email' => 'required|unique:users',
             'password' => $this->passwordRules(),
         ]);
-
 
         $user = User::create([
             'name' => $citizen->first_name. ' '. $citizen->last_name,
@@ -161,6 +193,8 @@ class CitizenController extends Controller
 
         return redirect()->route ('citizens')->with($this->notification);
     }
+
+
 
     public function delete($id){
         Citizen::findorfail($id)->delete();

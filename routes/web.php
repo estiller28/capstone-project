@@ -76,6 +76,9 @@ Route::middleware(['auth:sanctum','verified',])->group(function (){
             Route::get('/restore/{id}', [CitizenController::class,'restore']);
             Route::get('/force-delete/{id}', [CitizenController::class, 'forceDelete']);
 
+            //Update Citizen Image
+            Route::post('/profile-picture', [CitizenController::class, 'updateCitizenImage'])->name('citizen.updateProfile');
+
             //Admin Access
             Route::post('/edit/permission/{id}', [CitizenController::class, 'updateAdminPermission'])->name('permission.update');
 
