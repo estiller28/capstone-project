@@ -27,15 +27,13 @@
     @include('admin.top-nav')
 
     @include('admin.sidebar')
+
     <div class="content-wrapper">
         @yield('content')
-
     </div>
-    <!-- /.content-wrapper -->
 
     <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">
-        <!-- Control sidebar content goes here -->
         <div class="p-3">
             <h5>Title</h5>
             <p>Sidebar content</p>
@@ -99,7 +97,6 @@
 </script>
 
 <style>
-
     .card .bg-danger{
         background: #F8D7DA !important;
         color: #842029 !important;
@@ -137,6 +134,9 @@
     }
     .loader{
         width: 100px;
+    }
+    .small-box{
+        box-shadow: none !important;
     }
 </style>
 
