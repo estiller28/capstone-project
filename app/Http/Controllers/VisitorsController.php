@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\VisitorExport;
 use App\Models\Visitor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class VisitorsController extends Controller
 {
@@ -14,8 +16,8 @@ class VisitorsController extends Controller
 
     public function create(Request $request){
         $validator = \Validator::make($request->all(),[
-            'first_name' => 'required',
-            'last_name' => 'required',
+            'name' => 'required',
+            'purpose' => 'required',
             'address' => 'required',
             'phone' => 'required',
 
@@ -40,8 +42,8 @@ class VisitorsController extends Controller
             file_put_contents($file, $image_base64);
 
             Visitor::create([
-                'first_name'    => $request->first_name,
-                'last_name'     => $request->last_name,
+                'name'          => $request->name,
+                'purpose'       => $request->purpose,
                 'address'       => $request->address,
                 'phone'         => $request->phone,
                 'image'         => $fileName,
@@ -61,7 +63,8 @@ class VisitorsController extends Controller
         return view('admin.visitor.visitor_list', compact('visitors'));
     }
 
-    public function visitorList(){
-
+    public function VisitorExport()
+    {
+        return Excel::download(new VisitorExport(), 'Visitors.xlsx');
     }
 }

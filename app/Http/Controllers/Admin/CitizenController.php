@@ -37,10 +37,7 @@ class CitizenController extends Controller
 
     public function index(){
 
-        $citizens = Citizen::where('barangay_id', $this->barangay())
-            ->with('barangay', 'purok', 'user')->get();
-
-
+        $citizens = Citizen::where('barangay_id', $this->barangay())->with('barangay', 'purok', 'user')->get();
         $deleted_citizens = Citizen::onlyTrashed()->latest()->paginate(5);
 
         return view('admin.citizens.citizens_list', compact('citizens','deleted_citizens'));
@@ -74,7 +71,6 @@ class CitizenController extends Controller
             'message' => 'Citizen inserted successfully',
             'alert-type' => 'success',
         ]);
-
         return redirect()->route('citizens')->with($notification);
     }
 
@@ -82,7 +78,6 @@ class CitizenController extends Controller
         $citizen = Citizen::find($id);
         $puroks= Purok::where('barangay_id', $this->barangay())->get();
         $permissions = Permission::all();
-
         $user = User::with('roles','permissions')->where('id', $citizen->user_id)->first();
 
         if($user){
@@ -107,19 +102,13 @@ class CitizenController extends Controller
             return response()->json(['status'=> 0, 'msg'=>'Something went wrong, try again later']);
 
         }else{
-//
             $oldPhoto = Citizen::find($citizen)->getAttributes()['picture'];
-
-
-
             if($oldPhoto != ''){
                 if(\File::exists(public_path($path.$oldPhoto))){
                     \File::delete(public_path($path.$oldPhoto));
                 }
             }
-
             $update = Citizen::find($citizen);
-
             $update->picture = $new_image_name;
 
             $update->save();

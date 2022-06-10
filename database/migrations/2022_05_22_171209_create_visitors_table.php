@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('visitors', function (Blueprint $table) {
             $table->id();
-            $table->string('first_name')->nullable();;
-            $table->string('last_name')->nullable();;
-            $table->string('address')->nullable();;
+            $table->string('name')->nullable();
+            $table->text('purpose')->nullable();
+            $table->string('address')->nullable();
             $table->string('image')->nullable();
             $table->unsignedBigInteger('phone')->nullable();
             $table->foreignId('barangay_id')->nullable()->constrained()->nullOnDelete();

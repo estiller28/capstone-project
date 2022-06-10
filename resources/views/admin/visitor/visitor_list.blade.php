@@ -30,7 +30,10 @@
                             <div class="d-flex list-button justify-content-between">
                                 <div class="flex-1"> <strong>All Citizens</strong></div>
                                 <div>
-                                    <a href="{{ url('/log-book') }}" target="_blank" class="btn btn-sm btn-primary mr-2">
+                                    <a href="{{ route('visitor.download') }}" target="_blank" class="btn btn-sm btn-secondary mr-2">
+                                        <i class="mr-2 fas fa-sign-in"></i>Download Visitors
+                                    </a>
+                                    <a href="{{ route('logbook') }}" target="_blank" class="btn btn-sm btn-primary mr-2">
                                         <i class="mr-2 fas fa-sign-in"></i>Proceed to Logbook
                                     </a>
                                 </div>
@@ -42,8 +45,8 @@
                                 <tr>
                                     <td class="table-primary" scope="col">ID</td>
                                     <td class="table-primary" scope="col">Image</td>
-                                    <td class="table-primary" scope="col">First Name</td>
-                                    <td class="table-primary" scope="col">Last Name</td>
+                                    <td class="table-primary" scope="col">Name</td>
+                                    <td class="table-primary" scope="col">Purpose</td>
                                     <td class="table-primary" scope="col">Visitors Address</td>
                                     <td class="table-primary" scope="col">Phone Number</td>
                                     <td class="table-primary" scope="col">Time</td>
@@ -54,9 +57,9 @@
                                 @forelse($visitors as $visitor)
                                     <tr>
                                         <td>{{ $visitor->id }}</td>
-                                        <td><img src="{{ asset('/visitors-image/'. $visitor->image)  }}"  style="width: 110px; height: 110px;"></td>
-                                        <td>{{ $visitor->first_name }}</td>
-                                        <td>{{ $visitor->last_name }}</td>
+                                        <td> <img src="{{ asset('/visitors-image/'. $visitor->image)  }}"  style="width: 110px; height: 110px;"></td>
+                                        <td>{{ $visitor->name }}</td>
+                                        <td>{{ $visitor->purpose }}</td>
                                         <td>{{ $visitor->address }}</td>
                                         <td>{{ $visitor->phone }}</td>
                                         <td>{{ $visitor->created_at->format('H:i:s')}}</td>

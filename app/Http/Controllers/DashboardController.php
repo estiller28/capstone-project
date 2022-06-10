@@ -22,7 +22,11 @@ class DashboardController extends Controller
         $events = Events::where('barangay_id', $this->barangay())->count();
         $visitor = Visitor::where('barangay_id',$this->barangay())->pluck('id')->count();
         $users  = User::where('barangay_id',$this->barangay())->pluck('id')->count();
-        return view('admin.dashboard', compact( 'citizens', 'events', 'visitor', 'users'));
+        $recentlyAddedCitizens = Citizen::where('barangay_id', $this->barangay())
+            ->latest()->limit('4')->get(['first_name', 'last_name', 'picture', 'created_at']);
+        $recentVisitors = Visitor::where('barangay_id', $this->barangay())->latest()->limit('5')->get();
+
+        return view('admin.dashboard', compact( 'citizens', 'events', 'visitor', 'users', 'recentlyAddedCitizens', 'recentVisitors'));
     }
 
     public function dashboard(){

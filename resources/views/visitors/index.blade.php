@@ -56,14 +56,14 @@
                         @csrf
                         <input type="hidden" name="image" class="image-tag">
                         <div class="col-md-6">
-                            <label for="validationCustom01" class="form-label">First name</label>
-                            <input type="text" name="first_name" class="form-control" id="validationCustom01"  required aria-describedby="validationServer03Feedback">
-                            <span class="text-danger error-text first_name_error"></span>
+                            <label for="validationCustom01" class="form-label">Name</label>
+                            <input type="text" name="name" class="form-control" id="validationCustom01"  required aria-describedby="validationServer03Feedback">
+                            <span class="text-danger error-text name_error"></span>
                         </div>
                         <div class="col-md-6">
-                            <label for="validationCustom02" class="form-label">Last name</label>
-                            <input type="text" name="last_name" class="form-control" id="validationCustom02"  required aria-describedby="validationServer03Feedback">
-                            <span class="text-danger error-text last_name_error"></span>
+                            <label for="validationCustom02" class="form-label">Purpose</label>
+                            <input type="text" name="purpose" class="form-control" id="validationCustom02"  required aria-describedby="validationServer03Feedback">
+                            <span class="text-danger error-text purpose_error"></span>
                         </div>
                         <div class="col-md-6">
                             <label for="validationCustom02" class="form-label">Address</label>

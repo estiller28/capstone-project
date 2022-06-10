@@ -116,9 +116,12 @@ Route::middleware(['auth:sanctum','verified',])->group(function (){
         });
 
         //Visitors
-        Route::get('/visitor/all', [VisitorsController::class, 'visitorAll'])->name('visitor.get');
-        Route::get('/log-book', [VisitorsController::class, 'index']);
-        Route::post('visitor/create', [VisitorsController::class, 'create'])->name('visitor.create');
+        Route::prefix('visitors')->group(function(){
+            Route::get('/all', [VisitorsController::class, 'visitorAll'])->name('visitor.get');
+            Route::get('/log-book', [VisitorsController::class, 'index'])->name('logbook');
+            Route::post('/create', [VisitorsController::class, 'create'])->name('visitor.create');
+            Route::get('/download', [VisitorsController::class, 'VisitorExport'])->name('visitor.download');
+        });
 
         //Test
         Route::get('/test', [TestController::class, 'index']);
