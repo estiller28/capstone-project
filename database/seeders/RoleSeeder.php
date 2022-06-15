@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
+use App\Models\User;
 
 class RoleSeeder extends Seeder
 {
@@ -26,6 +26,17 @@ class RoleSeeder extends Seeder
         foreach ($role as $roles ){
             Role::create(['name' => $roles]);
         }
+
+
+       $superAdmin =  User::create([
+            'name' => 'Super Admin',
+            'email' => 'super_admin@gmail.com',
+            'password' => bcrypt('password'),
+
+        ]);
+
+        $superAdmin->assignRole('Super Admin');
+
 
 
     }

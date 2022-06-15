@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Traits\smsNotification;
 use App\Models\Citizen;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -10,8 +11,9 @@ use App\Models\User;
 
 class TestController extends Controller
 {
-    public function index(){
+    use smsNotification;
 
+    public function index(){
         $user = User::where('id', Auth::user()->id)->with('citizen')->first();
         $citizen = Citizen::where('user_id', Auth::user()->id)->with('user')->first();
         $profilePhoto = $citizen->user->profile_photo_url;

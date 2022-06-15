@@ -39,10 +39,11 @@ Route::middleware(['auth:sanctum','verified',])->group(function (){
 
     Route::middleware(['role:User'])->group(function(){
         Route::get('/user/dashboard', [CreateCitizenUser::class, 'userDashboard'])->name('userDashboard');
+
     });
 
     //Super Admin Routes
-    Route::middleware('role:Super_Admin')->group(function(){
+    Route::middleware(['role:Super Admin'])->group(function(){
         Route::get('/super/admin', [AdminRegisterController::class, 'SuperAdminDashboard']);
     });
 
@@ -84,6 +85,7 @@ Route::middleware(['auth:sanctum','verified',])->group(function (){
 
             //User Access
             Route::post('/add/user/{id}', [CitizenController::class, 'createCitizenUser'])->name('register.user');
+            Route::post('/edit/access/{id}', [CitizenController::class, 'updateCitizenAccess'])->name('update.citizen.access');
 
         });
 
@@ -101,7 +103,7 @@ Route::middleware(['auth:sanctum','verified',])->group(function (){
             Route::post('/update-purok', [SettingsController::class, 'updatePurok'])->name('purok.update');
             Route::post('/delete-pruok', [SettingsController::class, 'deletePurok'])->name('purok.delete');
             Route::resource('/roles', RolesController::class);
-            Route::get('/barangay_profile', [SettingsController::class, 'barangay'])->name( 'barangay');
+            Route::get('/barangay/profile', [SettingsController::class, 'barangay'])->name( 'barangay');
         });
 
         //User Management

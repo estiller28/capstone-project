@@ -17,6 +17,8 @@ class EventsController extends Controller
 {
     public function index(){
 
+        $this->authorize('Events');
+
         $event = array();
         $allEvents = Events::all('event_name', 'start_date', 'end_date', 'start_time', 'end_time', 'purpose');
 

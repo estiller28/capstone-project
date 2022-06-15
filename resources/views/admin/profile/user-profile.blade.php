@@ -18,45 +18,6 @@
         </div>
     </div>
 
-    <div class="modal fade" id="change_password" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Change Password</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-
-                    <form  class="needs-validation" novalidate action="{{ route('password.change') }}" method="Post">
-                        @csrf
-                        <div class="form-group mb-4">
-                            <label>Input Old Password</label>
-                            <input type="password" name="oldpassword"  class="form-control" id="validationServer03"  required aria-describedby="validationServer03Feedback">
-                            <span class="text-danger error-text first_name_error"></span>
-                        </div>
-                        <div class="form-group mb-4">
-                            <label>New Password</label>
-                            <input type="password" name="newpassword"  class="form-control" id="validationServer03"  required aria-describedby="validationServer03Feedback">
-                            <span class="text-danger error-text first_name_error"></span>
-                        </div>
-                        <div class="form-group mb-4">
-                            <label>Confirm Password</label>
-                            <input type="password" name="confirm_password"  class="form-control" id="validationServer03"  required aria-describedby="validationServer03Feedback">
-                            <span class="text-danger error-text first_name_error"></span>
-                        </div>
-                        <div class="text-right">
-                            <button type="submit" class="btn btn-primary">Update</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-dismiss="modal">Save Changes</button>
-        </div>
-    </div>
 
     <section class="content">
         <div class="container-fluid">
@@ -83,7 +44,6 @@
                                     <b>Address</b> <p class="float-right">Union Gubat Sorsogon</p>
                                 </li>
                             </ul>
-                            <a class="btn btn-primary btn-block" data-toggle="modal" data-target="#change_password"><b>Change Password</b></a>
                         </div>
                     </div>
                 </div>
@@ -92,8 +52,7 @@
                         <div class="card-header p-4">
                             <ul class="nav nav-pills">
                                 <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">General</a></li>
-                                <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Account Access</a></li>
-                                <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Settings</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Account Settings</a></li>
                             </ul>
                         </div>
                         <div class="card-body">
@@ -146,12 +105,17 @@
                                     </div>
                                 </div>
                                 <!-- /.tab-pane -->
-                                <div class="tab-pane" id="timeline">
-                                    Coming soon..
-                                </div>
+{{--                                <div class="tab-pane" id="timeline">--}}
+{{--                                    Coming soon..--}}
+{{--                                </div>--}}
                                 <!-- /.tab-pane -->
 
                                 <div class="tab-pane" id="settings">
+                                    <div class="post">
+                                        <div class="mb-5 mb-5 mb-5 mb-5 p-0 embed-responsive embed-responsive-16by9" style="height: ">
+                                            <iframe class="embed-responsive-item" src="{{ route('profile.show') }}"></iframe>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

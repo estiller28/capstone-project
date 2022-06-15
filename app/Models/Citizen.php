@@ -24,9 +24,8 @@ class Citizen extends Authenticatable
         'barangay_id',
         'purok_id',
         'picture',
+        'barangay_official'
     ];
-
-
 
     /**
      * The accessors to append to the model's array form.
@@ -55,7 +54,7 @@ class Citizen extends Authenticatable
     }
 
     public function barangay(){
-        return $this->belongsTo(Barangay::class, 'barangay_id', 'id');
+        return $this->belongsTo(Barangay::class, 'barangay_id', 'id')->withDefault();
     }
     public function purok(){
         return $this->belongsTo(Purok::class , 'purok_id', 'id')->withDefault();

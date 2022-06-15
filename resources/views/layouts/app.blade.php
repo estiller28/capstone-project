@@ -12,8 +12,8 @@
         <!-- Styles -->
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
 
-{{--        @livewireStyles--}}
-{{--        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">--}}
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 {{--        <!-- Scripts -->--}}
 {{--        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.0-alpha1/css/bootstrap.min.css">--}}
 {{--        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>--}}
@@ -35,12 +35,11 @@
             }
         </style>
 {{--        <div class="min-h-screen bg-gray-100">--}}
-            @livewire('navigation-menu')
 
             <!-- Page Heading -->
             @if (isset($header))
                 <header class="bg-white shadow px-6">
-                    <div class="container-fluid mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                    <div class="container-fluid mx-auto py-2 px-2 sm:px-6 lg:px-8">
                         {{ $header }}
                     </div>
                 </header>

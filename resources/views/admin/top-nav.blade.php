@@ -69,7 +69,6 @@
             </a>
             <ul class="dropdown-menu dropdown-menu-sm-left">
                 <span class="dropdown-header font-weight-bold"><h6 class="mt-2">{{ Auth::user()->name }}</h6></span>
-
                 <a href="{{ route('myprofile') }}" class="dropdown-item">
                     <i class="nav-icon fas fa-user mr-3"></i> My Profile
                 </a>
@@ -77,7 +76,6 @@
                 <a href="#" class="dropdown-item">
                     <i class="fas fa-cog mr-3"></i> Settings
                 </a>
-
                 <div class="dropdown-divider"></div>
 
                 <form method="POST" action="{{ route('logout') }}">

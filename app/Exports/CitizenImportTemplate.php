@@ -18,6 +18,7 @@ class CitizenImportTemplate implements WithHeadings, WithEvents
             'Middle Name',
             'Last Name',
             'Date of Birth',
+            'Purok ID',
         ];
     }
 
@@ -26,27 +27,27 @@ class CitizenImportTemplate implements WithHeadings, WithEvents
         return [
             AfterSheet::class => function(AfterSheet $event) {
                 // bg-color
-                $event->sheet->getDelegate()->getStyle('A1:D1')->getFill()
+                $event->sheet->getDelegate()->getStyle('A1:E1')->getFill()
                     ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                     ->getStartColor()
                     ->setARGB('215476');
 
                 // font-color
-                $event->sheet->getDelegate()->getStyle('A1:D1')
+                $event->sheet->getDelegate()->getStyle('A1:E1')
                     ->getFont()
                     ->getColor()
                     ->setARGB('FFFFFF');
 
                 // font-weight
-                $event->sheet->getDelegate()->getStyle('A1:D1')
+                $event->sheet->getDelegate()->getStyle('A1:E1')
                     ->getFont()->setBold(true);
 
                 // font-size
-                $event->sheet->getDelegate()->getStyle('A1:D1')
+                $event->sheet->getDelegate()->getStyle('A1:E1')
                     ->getFont()->setSize(9);
 
                 //align-center
-                $event->sheet->getDelegate()->getStyle('A1:D1')
+                $event->sheet->getDelegate()->getStyle('A1:E1')
                     ->getAlignment()
                     ->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
 

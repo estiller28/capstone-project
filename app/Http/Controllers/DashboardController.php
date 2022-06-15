@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Events;
+use App\Models\Purok;
 use App\Models\Visitor;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -22,17 +23,18 @@ class DashboardController extends Controller
         $events = Events::where('barangay_id', $this->barangay())->count();
         $visitor = Visitor::where('barangay_id',$this->barangay())->pluck('id')->count();
         $users  = User::where('barangay_id',$this->barangay())->pluck('id')->count();
-        $recentlyAddedCitizens = Citizen::where('barangay_id', $this->barangay())
-            ->latest()->limit('4')->get(['first_name', 'last_name', 'picture', 'created_at']);
+        $recentlyAddedCitizens = Citizen::where('barangay_id', $this->barangay())->latest()->limit('4')->get(['first_name', 'last_name', 'picture', 'created_at']);
         $recentVisitors = Visitor::where('barangay_id', $this->barangay())->latest()->limit('5')->get();
+
+//        $purok = Purok::where('barangay_id', auth()->user()->barangay_id)->pluck('id', 'purok_name');
 
         return view('admin.dashboard', compact( 'citizens', 'events', 'visitor', 'users', 'recentlyAddedCitizens', 'recentVisitors'));
     }
 
     public function dashboard(){
         if(Auth::check()){
-            if(Auth::user()->hasRole('Super_Admin')){
-                return view('Super_Admin.super_dashboard');
+            if(Auth::user()->hasRole('Super Admin')){
+                return redirect('/super/admin');
 
             }if(Auth::user()->hasRole('Admin')){
                 return redirect('/admin/dashboard');

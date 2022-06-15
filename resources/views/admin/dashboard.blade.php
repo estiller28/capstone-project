@@ -92,7 +92,7 @@
                             <div class="card-header bg-gradient-info">
                                 <h3 class="card-title">Recently Added Citizens</h3>
                                 <div class="card-tools">
-                                    <span class="badge badge-danger">8 New Members</span>
+                                    <span class="badge badge-danger">New Members</span>
                                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                         <i class="fas fa-minus"></i>
                                     </button>

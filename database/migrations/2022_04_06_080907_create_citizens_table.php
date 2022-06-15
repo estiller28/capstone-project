@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
             $table->foreignId('purok_id')->nullable()->constrained()->nullOnDelete();
             $table->foreignId('barangay_id')->nullable()->constrained()->nullOnDelete();
+            $table->string('barangay_official')->nullable();
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
             $table->string('email')->nullable();

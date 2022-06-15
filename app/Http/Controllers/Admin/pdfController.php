@@ -24,7 +24,7 @@ pdfController extends Controller
     public function index()
     {
         $citizens = Citizen::select(DB::raw("CONCAT(last_name,', ', first_name) AS full_name, id"))
-            ->where('barangay_id', auth()->user()->id)
+            ->where('barangay_id', auth()->user()->barangay_id)
             ->orderBy('last_name', 'asc')
             ->get();
 

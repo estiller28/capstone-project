@@ -12,6 +12,7 @@
         "guzzlehttp/guzzle": "^7.2",
         "humans/semaphore-sms": "^4.0",
         "intervention/image": "^2.7",
+        "laravel/fortify": "^1.13",
         "laravel/framework": "^9.0",
         "laravel/jetstream": "^2.6",
         "laravel/sanctum": "^2.14",

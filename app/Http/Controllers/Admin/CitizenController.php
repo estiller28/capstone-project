@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 use App\Actions\Fortify\PasswordValidationRules;
 use App\Exports\CitizenImportTemplate;
 use App\Http\Controllers\Controller;
+use App\Http\Traits\authIdentifier;
+use App\Http\Traits\barangayIdentifier;
 use App\Models\Events;
 use App\Models\Purok;
 use App\Models\Visitor;
@@ -17,39 +19,36 @@ use App\Imports\CitizensImport;
 use App\Exports\CitizensExport;
 use App\Models\User;
 use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
-use Symfony\Component\Console\Input\Input;
+use Illuminate\Support\Facades\Log;
 
 class CitizenController extends Controller
 {
-
     use PasswordValidationRules;
-    public $notification;
+    use barangayIdentifier;
+    use authIdentifier;
 
-    public function Auth(){
-        $user = Auth::user()->id;
-        return $user;
-    }
-    public function barangay(){
-        $barangay = Auth::user()->barangay_id;
-        return $barangay;
-    }
+    public $notification;
 
     public function index(){
 
-        $citizens = Citizen::where('barangay_id', $this->barangay())->with('barangay', 'purok', 'user')->get();
-        $deleted_citizens = Citizen::onlyTrashed()->latest()->paginate(5);
+        $this->authorize('Citizens');
 
+        $citizens = Citizen::where('barangay_id', $this->barangayId())->with(['barangay', 'purok', 'user'])->get();
+        $deleted_citizens = Citizen::where('barangay_id', $this->barangayId())->onlyTrashed()->latest()->paginate(5);
         return view('admin.citizens.citizens_list', compact('citizens','deleted_citizens'));
     }
 
     public function addCitizenView(){
 
-        $purok = Purok::where('barangay_id', $this->barangay())->pluck('purok_name', 'id' );
+        $this->authorize('Citizens');
+
+        $purok = Purok::where('barangay_id', $this->barangayId())->pluck('purok_name', 'id' );
         return view('admin.citizens.citizens_create', compact('purok'));
     }
 
     public function addCitizen(Request $request){
+        $this->authorize('Citizens');
+
         $request->validate([
             'first_name' => 'required|unique:citizens|max:255',
             'middle_name' => 'max:255|nullable',
@@ -75,8 +74,10 @@ class CitizenController extends Controller
     }
 
     public function edit($id){
+        $this->authorize('Citizens');
+
         $citizen = Citizen::find($id);
-        $puroks= Purok::where('barangay_id', $this->barangay())->get();
+        $puroks= Purok::where('barangay_id', $this->barangayId())->get();
         $permissions = Permission::all();
         $user = User::with('roles','permissions')->where('id', $citizen->user_id)->first();
 
@@ -85,12 +86,13 @@ class CitizenController extends Controller
             return view('admin.citizens.citizens_edit', compact('citizen', 'userPermissions', 'permissions', 'user', 'puroks'));
         }
 
-        $puroks= Purok::where('barangay_id', $this->barangay())->get();
+        $puroks= Purok::where('barangay_id', $this->barangayId())->get();
         return view('admin.citizens.citizens_edit', compact('citizen',  'user', 'puroks', 'permissions'));
 
     }
 
     public function updateCitizenImage(Request $request){
+        $this->authorize('Citizens');
 
         $citizen = $request->input('citizen_id');
         $path = 'user/';
@@ -119,11 +121,12 @@ class CitizenController extends Controller
 
     public function updateAdminPermission(Request $request, $id){
 
-        $citizen = Citizen::findOrFail($id);
+        $this->authorize('Citizens');
+        $citizen = Citizen::find($id);
         $user = User::with('permissions')->where('id', $citizen->user_id)->first();
 
         $request->validate([
-            'permission' => 'required'
+            'permission' => 'required',
         ]);
 
         $permission = $request->permission;
@@ -137,6 +140,7 @@ class CitizenController extends Controller
     }
 
     public function createCitizenUser(Request $request, $id){
+        $this->authorize('Citizens');
 
         $citizen = Citizen::find($id);
         $request->validate([
@@ -144,29 +148,60 @@ class CitizenController extends Controller
             'password' => $this->passwordRules(),
         ]);
 
-        $user = User::create([
-            'name' => $citizen->first_name. ' '. $citizen->last_name,
-            'email' => $request->email,
-            'barangay_id' => $citizen->barangay_id,
-            'password' => Hash::make($request->password),
-        ]);
-        $user->assignRole('Citizen');
+        if($citizen){
+            if($request->role == 2){
+                $user = User::create([
+                    'name' => $citizen->first_name. ' '. $citizen->last_name,
+                    'email' => $request->email,
+                    'barangay_id' => $citizen->barangay_id,
+                    'password' => Hash::make($request->password),
+                ]);
+                $user->assignRole('Citizen');
 
-        $citizen->user_id = $user->id;
-        $citizen->email = $user->email;
+                $citizen->user_id = $user->id;
+                $citizen->email = $user->email;
+                $citizen->save();
 
-        $citizen->save();
-
-        $notification = ([
-            'message' => 'User created successfully',
-            'alert-type' => 'info',
-        ]);
-
-        return redirect()->back()->with($notification);
+                $notification = ([
+                    'message' => 'User created successfully',
+                    'alert-type' => 'info',
+                ]);
+                return redirect()->back()->with($notification);
+            }
+        }else{
+            Log::error($citizen);
+        }
 
     }
 
+    public function updateCitizenAccess(Request $request, $id){
+        $this->authorize('Citizens');
+
+        $citizen = Citizen::find($id);
+
+        $request->validate([
+            'password' => $this->passwordRules()
+        ]);
+
+        if($request->roles == 2){
+            User::find($citizen->user_id)->update([
+                'password' => Hash::make($request->password),
+            ]);
+
+            $notification = ([
+                'message' => 'Citizen password updated successfully',
+                'alert-type' => 'info',
+            ]);
+            return redirect()->back()->with($notification);
+
+        }else{
+            dd($citizen);
+        }
+    }
+
+
     public function update(Request $request, $id){
+        $this->authorize('Citizens');
 
         Citizen::findOrfail($id)->update([
             'first_name' => $request->first_name,
@@ -184,8 +219,8 @@ class CitizenController extends Controller
     }
 
 
-
     public function delete($id){
+        $this->authorize('Citizens');
         Citizen::findorfail($id)->delete();
 
         $notification = [
@@ -197,6 +232,7 @@ class CitizenController extends Controller
 
 
     public function restore($id){
+        $this->authorize('Citizens');
         Citizen::withTrashed()->find($id)->restore();
 
         $notification = ([
@@ -216,26 +252,40 @@ class CitizenController extends Controller
         return redirect()->back()->with($notification);
 
     }
-    public function CitizensImport(Request $request)
-    {
+    public function CitizensImport(Request $request){
+        $this->authorize('Citizens');
         $request->validate([
             'template' => 'required|mimes:xls,csv,xlsx',
         ]);
-        Excel::import(new CitizensImport(), $request->file('template'));
-        $notification = ([
-            'message' => 'Citizen inserted successfully',
-            'alert-type' => 'success',
-        ]);
 
-        return redirect()->back()->with($notification);
+        try {
+            if($request->has('template')){
+                Excel::import(new CitizensImport(), $request->file('template'));
+                $notification = ([
+                    'message' => 'Citizen inserted successfully',
+                    'alert-type' => 'success',
+                ]);
+
+                return redirect()->back()->with($notification);
+            }
+        }catch (\Exception $e) {
+            $notification = ([
+                'message' => 'Incorrect import data',
+                'alert-type' => 'error',
+            ]);
+            return redirect()->back()->with($notification);
+        }
     }
 
-    public function CitizensExport()
-    {
+    public function CitizensExport(){
+        $this->authorize('Citizens');
+
         return Excel::download(new CitizensExport(), 'All-Citizens.xlsx');
     }
 
     public function CitizensExportTemplate(){
+        $this->authorize('Citizens');
+
         return Excel::download(new CitizenImportTemplate(), 'Citizen-Import-Template.xlsx');
     }
 }

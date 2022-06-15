@@ -110,7 +110,7 @@
                                                             @endif
                                                         </li>
                                                         <li class="list-group-item">
-                                                            <b>Address</b> <p class="float-right"><input class="editData" id="edit" disabled type="text" value="Union Gubat Sorsogon"></p>
+                                                            <b>Address</b> <p class="float-right"><input class="editData edit" id="edit" disabled type="text" value="Union Gubat Sorsogon"></p>
                                                         </li>
                                                         <li class="list-group-item">
                                                             <b>Mobile Number:</b> <p class="float-right">09978839185</p>
@@ -150,14 +150,15 @@
                                                     </ul>
                                                 </div>
                                             </div>
+                                            <div class="col-md-6">
+                                                <button id="btnEdit" class="btn btn-dark">Edit Data</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                                 <!-- /.tab-pane -->
                                 <div class="tab-pane" id="timeline">
                                     <div class="row justify-content-between">
-
-
                                         @if($citizen->user_id != null && $user != null)
                                             @if($user->hasRole('Admin'))
                                                 <div class="col-md-4">
@@ -180,16 +181,16 @@
                                                                     </select>
                                                                 </div>
                                                                 <input type="hidden" value="{{ $citizen->email }}">
-                                                                <div class="form-group mb-4">
-                                                                    <label>Password:</label>
-                                                                    <input type="password" name="password" class="form-control" id="password"  required aria-describedby="validationServer03Feedback" autocomplete="on">
-                                                                    <span class="text-danger error-text purok_name_error"></span>
-                                                                </div>
-                                                                <div class="form-group mb-4">
-                                                                    <label>Confirm Password:</label>
-                                                                    <input type="password" name="passwordConfirm" class="form-control" id="confirm"  required aria-describedby="validationServer03Feedback" autocomplete="on">
-                                                                    <span class="text-danger error-text purok_name_error"></span>
-                                                                </div>
+                                                                {{--                                                            <div class="form-group mb-4">--}}
+                                                                {{--                                                                <label>Password:</label>--}}
+                                                                {{--                                                                <input type="password" name="password" class="form-control" id="password"  required aria-describedby="validationServer03Feedback" autocomplete="on">--}}
+                                                                {{--                                                                <span class="text-danger error-text purok_name_error"></span>--}}
+                                                                {{--                                                            </div>--}}
+                                                                {{--                                                            <div class="form-group mb-4">--}}
+                                                                {{--                                                                <label>Confirm Password:</label>--}}
+                                                                {{--                                                                <input type="password" name="passwordConfirm" class="form-control" id="confirm"  required aria-describedby="validationServer03Feedback" autocomplete="on">--}}
+                                                                {{--                                                                <span class="text-danger error-text purok_name_error"></span>--}}
+                                                                {{--                                                            </div>--}}
                                                                 <div class="form-group mb-4 adminBtn">
                                                                     <button class="btn btn-sm btn-primary">Save User Access</button>
                                                                 </div>
@@ -203,7 +204,7 @@
                                                         <div class="card-header">
                                                             <div class="card-title">
                                                                 <div class="card-label">
-                                                                    User Access Permissions
+                                                                    User Access Permissions sss
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -218,7 +219,8 @@
                                                                     </div>
                                                                 @endforeach
                                                                 <div class="form-group mt-5 text-right">
-                                                                    <button type="submit" class="btn btn-sm btn-primary">Save User Access</button>
+                                                                    <button class="btn btn-sm btn-info">
+                                                                        <span> <i class="mr-2 fa-solid fa-square-pen"></i></span>Save User Access</button>
                                                                 </div>
                                                             </div>
                                                         </form>
@@ -236,36 +238,66 @@
                                                             </div>
                                                         </div>
                                                         <div class="card-body">
-                                                            <div class="form-group mb-4">
-                                                                <label>Role:</label>
-                                                                <select style="width: 100%;" name="roles" class="form-control role custom-select" id="roles"  required aria-describedby="validationServer03Feedback">
-                                                                    <option  value="">Select User Type</option>
-                                                                    <option  value="1">Admin</option>
-                                                                    <option selected  value="2">Citizen</option>
-                                                                </select>
-                                                            </div>
-                                                            <input type="hidden" value="{{ $citizen->email }}">
-                                                            <div class="form-group mb-4">
-                                                                <label>Password:</label>
-                                                                <input type="password" name="password" class="form-control" id="password"  required aria-describedby="validationServer03Feedback" autocomplete="on">
-                                                                <span class="text-danger error-text purok_name_error"></span>
-                                                            </div>
-                                                            <div class="form-group mb-4">
-                                                                <label>Confirm Password:</label>
-                                                                <input type="password" name="passwordConfirm" class="form-control" id="confirm"  required aria-describedby="validationServer03Feedback" autocomplete="on">
-                                                                <span class="text-danger error-text purok_name_error"></span>
-                                                            </div>
-                                                            <div class="form-group mb-4 userBtn">
-                                                                <button class="btn btn-sm btn-primary">Save User Access</button>
-                                                            </div>
+                                                            <form class="needs-validation" novalidate action="{{ url( 'citizen/edit/access/' .$citizen->id) }}" method="post">
+                                                                @csrf
+                                                                <div class="form-group mb-4">
+                                                                    <label>Role:</label>
+                                                                    <select style="width: 100%;" name="roles" class="form-control role custom-select" id="citizenRole"  required aria-describedby="validationServer03Feedback">
+                                                                        <option  value="">Select User Type</option>
+                                                                        <option  value="1">Admin</option>
+                                                                        <option selected  value="2">Citizen</option>
+                                                                    </select>
+                                                                </div>
+                                                                <input type="hidden" value="{{ $citizen->email }}">
+                                                                <div class="form-group mb-4">
+                                                                    <label>Password:</label>
+                                                                    <input type="password" name="password" class="form-control" id="password"  required aria-describedby="validationServer03Feedback" autocomplete="on">
+                                                                </div>
+                                                                <div class="form-group mb-4">
+                                                                    <label>Confirm Password:</label>
+                                                                    <input type="password" name="password_confirmation" class="form-control" id="confirm"  required aria-describedby="validationServer03Feedback" autocomplete="on">
+                                                                    <span class="text-danger error-text purok_name_error"></span>
+                                                                </div>
+                                                                <div class="form-group mb-4 userBtn">
+                                                                    <button class="btn btn-sm btn-info">
+                                                                        <span> <i class="mr-2 fa-solid fa-square-pen"></i></span>Update User Access</button>
+                                                                </div>
+                                                            </form>
                                                         </div>
                                                     </div>
                                                 </div>
+
+                                                <div class="col-md-6" id="citizenPermission">
+                                                    <div class="card">
+                                                        <div class="card-header">
+                                                            <div class="card-title">
+                                                                <div class="card-label">
+                                                                    User Access Permissions
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <form action="" method="">
+                                                                @foreach($permissions as $permission)
+                                                                    <div class="form-check icheck-primary">
+                                                                        <input name="permission[]" class="form-check-input" type="checkbox" value="" id="{{ $permission->id }}" />
+                                                                        <label class="form-check-label" for="{{ $permission->id }}">{{ $permission->name }}</label>
+                                                                    </div>
+                                                                @endforeach
+                                                                <div class="form-group mt-5 text-right">
+                                                                    <button class="btn btn-sm btn-info">
+                                                                        <span> <i class="mr-2 fa-solid fa-square-pen"></i></span>Save User Access</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
                                             @endif
                                         @else
                                             {{--                                            NO user_id--}}
                                             <div class="col-12">
-                                                <form class="needs-validation" novalidate action="{{ url('citizen/add/user/'. $citizen->id) }}" method="post">
+                                                <form class="needs-validation"  novalidate id="NoUserId" action="{{ url('citizen/add/user/'. $citizen->id) }}" method="post">
                                                     @csrf
                                                     <div class="row justify-content-between">
                                                         <div class="col-md-4">
@@ -273,7 +305,7 @@
                                                                 <div class="card-header">
                                                                     <div class="card-title">
                                                                         <div class="card-label">
-                                                                            Login Credentials
+                                                                            Login Credentials No Use
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -413,10 +445,14 @@
             display: none;
         }
 
+        #citizenPermission{
+            display: none;
+        }
+
         .editData{
             width: 100% !important;
             line-height: 0 !important;
-            text-indent: 29px !important;
+            text-indent: 28px !important;
             border: none;
             background: none !important;
         }
@@ -440,6 +476,17 @@
                 theme: 'bootstrap4'
             })
         });
+
+
+        // $(document).ready(function(){
+        //     $('#NoUserId').submit(function(){
+        //         if ($('input:checkbox').filter(':checked').length < 1){
+        //             alert("Please Check at least one Check Box");
+        //             return false;
+        //         }
+        //     });
+        // });
+
 
         $(document).ready(function (){
 
@@ -504,10 +551,21 @@
                 }
             });
             $('#btnEdit').on('click', function (){
-                $('.editData').removeAttr('disabled');
-                $("input").removeClass('.editData');
-                $("input").addClass('.form-control');
+                $('.edit').removeAttr('disabled');
+                $('.edit').addClass('form-control');
+                $('.edit').removeClass('.editData')
 
+            })
+
+            $('#citizenRole').on('change', function(){
+                if(this.value == '1'){
+                    $('#citizenPermission').show();
+                    $('.userBtn').hide();
+                }
+                else{
+                    $('.userBtn').show();
+                    $('#citizenPermission').hide();
+                }
             })
         });
     </script>

@@ -1,0 +1,46 @@
+.card .bg-danger{
+    background: #F8D7DA !important;
+    color: #842029 !important;
+}
+
+@media screen and (max-width: 576px) {
+    h1.section-title{
+        font-size: 25px !important;
+    }
+}
+
+label{
+    font-weight: normal !important;
+}
+.card{
+    background-color: #FFFFFF !important;
+    border: none!important;
+    box-shadow: none;
+
+}
+.card-label{
+    font-weight: 600 !important;
+    font-size: 1.2rem;
+}
+.loader-wrapper{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    background: #fff;
+    align-items: center;
+}
+.loader{
+    width: 100px;
+}
+.small-box{
+    box-shadow: none !important;
+}
+
+ul{
+    text-decoration: none;
+    list-style: none;
+}

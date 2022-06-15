@@ -18,28 +18,23 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
     <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
 
 </head>
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed">
 <div class="wrapper">
 
-    <!-- Navbar -->
     @include('admin.top-nav')
-
     @include('admin.sidebar')
-
     <div class="content-wrapper">
         @yield('content')
     </div>
-
-    <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">
         <div class="p-3">
             <h5>Title</h5>
             <p>Sidebar content</p>
         </div>
     </aside>
-
     <footer class="main-footer">
         <div class="float-right d-none d-sm-inline">
             Anything you want
@@ -49,30 +44,13 @@
 </div>
 
 <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('js/validation.js') }}"></script>
 <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
 <script src="{{ asset('plugins/croptool/ijaboCropTool.min.js') }}"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
 
 <script>
-    (function() {
-        'use strict';
-        window.addEventListener('load', function() {
-            // Fetch all the forms we want to apply custom Bootstrap validation styles to
-            var forms = document.getElementsByClassName('needs-validation');
-            // Loop over them and prevent submission
-            var validation = Array.prototype.filter.call(forms, function(form) {
-                form.addEventListener('submit', function(event) {
-                    if (form.checkValidity() === false) {
-                        event.preventDefault();
-                        event.stopPropagation();
-                    }
-                    form.classList.add('was-validated');
-                }, false);
-            });
-        }, false);
-    })();
-
     @if(Session::has('message'))
     var type = "{{ Session::get('alert-type', 'info') }}"
     toastr.options.progressBar = true;
@@ -93,52 +71,8 @@
             break;
     }
     @endif
-
 </script>
 
-<style>
-    .card .bg-danger{
-        background: #F8D7DA !important;
-        color: #842029 !important;
-    }
-
-    @media screen and (max-width: 576px) {
-        h1.section-title{
-            font-size: 25px !important;
-        }
-    }
-
-    label{
-        font-weight: normal !important;
-    }
-    .card{
-        background-color: #FFFFFF !important;
-        border: none!important;
-        box-shadow: none;
-
-    }
-    .card-label{
-        font-weight: 600 !important;
-        font-size: 1.2rem;
-    }
-    .loader-wrapper{
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        top: 0;
-        left: 0;
-        display: flex;
-        justify-content: center;
-        background: #fff;
-        align-items: center;
-    }
-    .loader{
-        width: 100px;
-    }
-    .small-box{
-        box-shadow: none !important;
-    }
-</style>
 
 </body>
 </html>

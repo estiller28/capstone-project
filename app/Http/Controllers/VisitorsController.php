@@ -10,6 +10,7 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class VisitorsController extends Controller
 {
+
     public function index(){
         return view('visitors.index');
     }
@@ -20,7 +21,6 @@ class VisitorsController extends Controller
             'purpose' => 'required',
             'address' => 'required',
             'phone' => 'required',
-
         ]);
 
         if(!$validator->passes()){
@@ -58,6 +58,8 @@ class VisitorsController extends Controller
     }
 
     public function visitorAll(){
+
+        $this->authorize('Visitors Logbook');
         $visitors = Visitor::where('barangay_id', Auth::user()->barangay_id)->latest()->get();
 
         return view('admin.visitor.visitor_list', compact('visitors'));
@@ -65,6 +67,7 @@ class VisitorsController extends Controller
 
     public function VisitorExport()
     {
+        $this->authorize('Visitors Logbook');
         return Excel::download(new VisitorExport(), 'Visitors.xlsx');
     }
 }

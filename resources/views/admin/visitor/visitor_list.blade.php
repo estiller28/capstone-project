@@ -31,7 +31,7 @@
                                 <div class="flex-1"> <strong>All Citizens</strong></div>
                                 <div>
                                     <a href="{{ route('visitor.download') }}" target="_blank" class="btn btn-sm btn-secondary mr-2">
-                                        <i class="mr-2 fas fa-sign-in"></i>Download Visitors
+                                        <i class="mr-2 fas fa-download"></i>Download Visitors
                                     </a>
                                     <a href="{{ route('logbook') }}" target="_blank" class="btn btn-sm btn-primary mr-2">
                                         <i class="mr-2 fas fa-sign-in"></i>Proceed to Logbook
@@ -90,7 +90,7 @@
             $("#visitors_table").DataTable({
                 "responsive": true, "lengthChange": true, "autoWidth": false, "scrollX": false,
                 "pageLength": 4,
-                  "order": [], "search": {"caseInsensitive": true,}, "": false,
+
             });
         });
     </script>

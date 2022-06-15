@@ -66,7 +66,6 @@ class SettingsController extends Controller
 
         }else{
             if(!in_array($request->purok_name, $this->validatePurok())){
-//            if (!Purok::where('purok_name', $request->purok_name)->exists()) {
                 $randomId       =   rand(1,99999);
                 $purok = Purok::insert([
                     'purok_name' => $request->purok_name,

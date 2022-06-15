@@ -1,0 +1,53 @@
+[33mcommit 39b1998383da93d823974162201c06cf6b33e530[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: Daniel Estiller <estillerdaniel@gmail.com>
+Date:   Thu Jun 9 01:21:04 2022 +0800
+
+    update admin dashboard
+
+[33mcommit 8fa92691f72ac224c6aa1b20c84155972b460976[m
+Author: Daniel Estiller <estillerdaniel@gmail.com>
+Date:   Thu Jun 9 00:08:15 2022 +0800
+
+    enhanced user management
+
+[33mcommit 0ce033c8b8f1b2598960fed077d7c72b0dd24d38[m
+Author: Daniel Estiller <estillerdaniel@gmail.com>
+Date:   Mon Jun 6 22:56:46 2022 +0800
+
+    added user management module
+
+[33mcommit f94a1d050ca0ec4ae40306237ad2f3887f6efd31[m
+Author: Daniel Estiller <estillerdaniel@gmail.com>
+Date:   Fri Jun 3 22:41:16 2022 +0800
+
+    added update admin permission
+
+[33mcommit 3b77de67d60cec2557ee162745f9461fb2c96a0d[m
+Author: Daniel Estiller <estillerdaniel@gmail.com>
+Date:   Sun May 29 21:05:07 2022 +0800
+
+    added support on in adding purok on multiple barangays
+
+[33mcommit ed657f5b92b8fcff203ea75e021177eae1258aaa[m
+Author: Daniel Estiller <estillerdaniel@gmail.com>
+Date:   Sun May 29 01:37:06 2022 +0800
+
+    added user permission
+
+[33mcommit 50a5e8417b494ed860163162fdfd127366c7efe1[m
+Author: Daniel Estiller <estillerdaniel@gmail.com>
+Date:   Tue May 24 18:31:44 2022 +0800
+
+    Added permission seeder
+
+[33mcommit e9bf78822c2981bff6837deede9eb069cc8ea178[m
+Author: Daniel Estiller <estillerdaniel@gmail.com>
+Date:   Sun May 22 17:23:08 2022 +0800
+
+    Create Visitors Module
+
+[33mcommit 9350c9bc1f84f4810811f452c25633801081373b[m
+Author: Daniel Estiller <estillerdaniel@gmail.com>
+Date:   Thu May 19 08:30:54 2022 +0800
+
+    Import Project to VCS

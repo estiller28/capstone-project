@@ -6,6 +6,18 @@
 
     </x-slot>
 
+
+    <form method="POST" action="{{ route('logout') }}">
+        @csrf
+        <a href="{{ route('logout') }}" class="dropdown-item"
+           onclick="event.preventDefault();
+                    this.closest('form').submit();">
+            <i class="fas fa-sign-out mr-3"></i>
+            Log out
+        </a>
+    </form>
+    <div class="dropdown-divider"></div>
+
     <div class="py-4">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <table class="table">
@@ -23,3 +35,4 @@
         </div>
     </div>
 </x-app-layout>
+
