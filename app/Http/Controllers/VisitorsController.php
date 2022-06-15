@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exports\VisitorExport;
+use App\Http\Traits\barangayIdentifier;
 use App\Models\Visitor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -10,6 +11,8 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class VisitorsController extends Controller
 {
+
+    use barangayIdentifier;
 
     public function index(){
         return view('visitors.index');
@@ -47,7 +50,7 @@ class VisitorsController extends Controller
                 'address'       => $request->address,
                 'phone'         => $request->phone,
                 'image'         => $fileName,
-                'barangay_id'   => Auth::user()->barangay_id,
+                'barangay_id'   => $this->barangayId(),
 
             ]);
 
@@ -58,16 +61,15 @@ class VisitorsController extends Controller
     }
 
     public function visitorAll(){
-
         $this->authorize('Visitors Logbook');
-        $visitors = Visitor::where('barangay_id', Auth::user()->barangay_id)->latest()->get();
 
+        $visitors = Visitor::where('barangay_id', $this->barangayId())->latest()->get();
         return view('admin.visitor.visitor_list', compact('visitors'));
     }
 
     public function VisitorExport()
-    {
-        $this->authorize('Visitors Logbook');
+    {$this->authorize('Visitors Logbook');
+
         return Excel::download(new VisitorExport(), 'Visitors.xlsx');
     }
 }

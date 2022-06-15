@@ -59,7 +59,7 @@ class CitizenController extends Controller
             'first_name'    => $request->first_name,
             'middle_name'   => $request->middle_name,
             'last_name'     => $request->last_name,
-            'barangay_id'   => $this->barangay(),
+            'barangay_id'   => $this->barangayId(),
             'purok_id'      => $request->purok,
             'created_at'    => Carbon::now(),
         ]);
@@ -136,6 +136,7 @@ class CitizenController extends Controller
             'message' => 'User permission updated successfully',
             'alert-type' => 'info',
         ]);
+
         return redirect()->back()->with($notification);
     }
 
@@ -178,7 +179,6 @@ class CitizenController extends Controller
         $this->authorize('Citizens');
 
         $citizen = Citizen::find($id);
-
         $request->validate([
             'password' => $this->passwordRules()
         ]);

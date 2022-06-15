@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\EventStoreRequest;
+use App\Http\Traits\barangayIdentifier;
 use App\Models\Events;
 use Illuminate\Http\Request;
 use Humans\Semaphore\Laravel\Facade;
@@ -15,6 +16,8 @@ use App\Models\Citizen;
 
 class EventsController extends Controller
 {
+    use barangayIdentifier;
+
     public function index(){
 
         $this->authorize('Events');
@@ -42,7 +45,7 @@ class EventsController extends Controller
             'end_date'   => $request->end_date,
             'start_time' => date('H:i:s' , strtotime($request->start_time)),
             'end_time'   => date('H:i:s' , strtotime($request->end_time)),
-            'barangay_id' => Auth::user()->barangay_id,
+            'barangay_id' => $this->barangayId(),
         ]);
         Events::create($data);
 

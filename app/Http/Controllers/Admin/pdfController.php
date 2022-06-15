@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
+use App\Http\Traits\barangayIdentifier;
 use App\Models\Citizen;
 use App\Models\Certificates;
 use Codedge\Fpdf\Fpdf\Fpdf;
@@ -14,6 +15,7 @@ use Illuminate\Support\Facades\DB;
 class
 pdfController extends Controller
 {
+    use barangayIdentifier;
     protected $fpdf;
 
     public function __construct()
@@ -24,7 +26,7 @@ pdfController extends Controller
     public function index()
     {
         $citizens = Citizen::select(DB::raw("CONCAT(last_name,', ', first_name) AS full_name, id"))
-            ->where('barangay_id', auth()->user()->barangay_id)
+            ->where('barangay_id', $this->barangayId())
             ->orderBy('last_name', 'asc')
             ->get();
 

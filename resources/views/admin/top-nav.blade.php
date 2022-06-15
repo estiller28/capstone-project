@@ -8,7 +8,7 @@
         </li>
     </ul>
 
-    <ul class="navbar-nav ml-auto">
+    <ul class="navbar-nav ml-auto align-content-center">
         <li class="nav-item">
             <a class="nav-link" data-widget="navbar-search" href="#" role="button">
                 <i class="fas fa-search"></i>
@@ -63,7 +63,7 @@
         </li>
 
         <li class="nav-item dropdown user-menu">
-            <a href="#" class="nav-link dropdown-toggle px-2" data-toggle="dropdown">
+            <a href="#" class="nav-link dropdown-toggle px-2 pb-0 " data-toggle="dropdown">
                 <span class="mr-2 d-none d-md-inline">{{auth()->user()->name}}</span>
                 <img src="{{ Auth::user()->picture  }}" alt="{{ Auth::user()->name }}" class="user-image img-circle elevation-2 profile_picture">
             </a>

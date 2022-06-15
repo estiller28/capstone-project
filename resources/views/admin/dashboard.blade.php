@@ -21,7 +21,7 @@
         </div>
     </div>
 
-    <section class="content">
+    <div class="content">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-6">
@@ -32,7 +32,7 @@
                                     <h1>Hi <b><span class="text-info">{{ Auth::user()->name }}!</span></b> </h1>
                                 </div>
                                 <div class="text-left">
-                                    <h4 class="text-gray">Welcome back!</h4>
+                                    <h4 class="text-gray">welcome back!</h4>
                                 </div>
                             </div>
                         </div>
@@ -164,7 +164,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 
     <script src="{{asset('plugins/jquery/jquery.min.js')}}"></script>
 
