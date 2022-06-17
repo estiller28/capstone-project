@@ -103,8 +103,10 @@
                         <div class="card-body">
                             <table id="purok_table" class="table table-striped table-hover">
                                 <thead>
-                                <td class="table-primary">Purok Name</td>
-                                <td width="5%" class="table-primary">Action</td>
+                                <tr>
+                                    <td class="table-info font-weight-bold scope="col">Purok Name</td>
+                                    <td width="5%" class="table-info font-weight-bold  scope="col">Action</td>
+                                </tr>
                                 </thead>
                             </table>
                             <div class="card">

@@ -59,10 +59,12 @@ class CitizenController extends Controller
             'first_name'    => $request->first_name,
             'middle_name'   => $request->middle_name,
             'last_name'     => $request->last_name,
+            'date_of_birth' =>  \Carbon\Carbon::createFromFormat('Y-m-d', $request->date_of_birth)->toDateTimeString(),
             'barangay_id'   => $this->barangayId(),
             'purok_id'      => $request->purok,
             'created_at'    => Carbon::now(),
         ]);
+
 
         Citizen::create($citizen_data);
 

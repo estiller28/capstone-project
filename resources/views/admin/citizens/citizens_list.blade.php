@@ -175,14 +175,14 @@
                             <table id="example1" class="table table-hover table-striped">
                                 <thead>
                                 <tr>
-                                    <td class="table-primary" scope="col">ID
-                                    <td class="table-primary" scope="col">First Name</td>
-                                    <td class="table-primary" scope="col">Middle Name</td>
-                                    <td class="table-primary" scope="col">Last Name</td>
-                                    <td class="table-primary" scope="col">Purok</td>
-                                    <td class="table-primary" scope="col">Email</td>
-                                    <td class="table-primary" scope="col">Date Of Birth</td>
-                                    <td class="table-primary" width="5%">Action</td>
+                                    <td class="table-info  font-weight-bold" scope="col">ID
+                                    <td class="table-info  font-weight-bold" scope="col">First Name</td>
+                                    <td class="table-info  font-weight-bold" scope="col">Middle Name</td>
+                                    <td class="table-info  font-weight-bold" scope="col">Last Name</td>
+                                    <td class="table-info  font-weight-bold" scope="col">Purok</td>
+                                    <td class="table-info  font-weight-bold" scope="col">Email</td>
+                                    <td class="table-info  font-weight-bold" scope="col">Date Of Birth</td>
+                                    <td class="table-info  font-weight-bold"width="5%">Action</td>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -237,6 +237,28 @@
                 "": false,
             });
         });
+
+        {{--$('#example1').DataTable({--}}
+        {{--    "responsive": true, "lengthChange": true, "autoWidth": false, "scrollX": false,--}}
+        {{--    "search": {--}}
+        {{--        "caseInsensitive": true,--}}
+        {{--    },--}}
+        {{--    "": false,--}}
+        {{--    processing: true,--}}
+        {{--    info: true,--}}
+
+        {{--    ajax: "{{ route('citizen.get') }}",--}}
+        {{--    "pageLength": 5,--}}
+        {{--    "aLengthMenu": [[5,10,15,25,50],[5,10,15,25,50,"All"]],--}}
+        {{--    columns: [--}}
+        {{--        // {data: 'id', name:'id'},--}}
+        {{--        {data: 'DT_RowIndex', name: 'DT_RowIndex'},--}}
+        {{--        {data: 'first_name', name: 'first_name'},--}}
+        {{--        {data: 'middle_name', name: 'middle_name'},--}}
+        {{--        {data: 'last_name', name: 'last_name'},--}}
+        {{--        {data: 'actions', name: 'actions'},--}}
+        {{--    ]--}}
+        {{--})--}}
 
     </script>
 

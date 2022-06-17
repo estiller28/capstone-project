@@ -62,6 +62,13 @@
                                         @enderror
                                     </div>
                                     <div class="mb-4">
+                                        <p>Date Of Birth</p>
+                                        <input type="date" class="form-control" id="validationCustom01" name="date_of_birth" value="{{old('date_of_birth')}}" required>
+                                        @error('date_of_birth')
+                                        <span class="text-danger"> {{ $message }}</span><br>
+                                        @enderror
+                                    </div>
+                                    <div class="mb-4">
                                         <p>Purok</p>
                                         <select class="form-control" name="purok" id="" >
                                             @forelse($purok as $id => $puroks)

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
+use App\Http\Traits\barangayIdentifier;
 use App\Models\Barangay;
 use App\Models\Citizen;
 use App\Models\User;
@@ -12,13 +13,10 @@ use Yajra\DataTables\DataTables;
 
 class SettingsController extends Controller
 {
+    use barangayIdentifier;
 
-    public function brgy(){
-        $barangay = Auth::user()->barangay_id;
-        return $barangay;
-    }
     public function validatePurok(){
-        $purok = Purok::with('barangay')->where('barangay_id', $this->brgy())->pluck('purok_name')
+        $purok = Purok::with('barangay')->where('barangay_id', $this->barangayId())->pluck('purok_name')
             ->toArray();
 
         return $purok;
@@ -29,7 +27,7 @@ class SettingsController extends Controller
     }
 
     public function getPurok(){
-        $purok = Purok::where('barangay_id', Auth::user()->barangay_id)->orderBy('id', 'asc')->get();
+        $purok = Purok::where('barangay_id', $this->barangayId())->orderBy('id', 'asc')->get();
         return DataTables::of($purok)
             ->addIndexColumn()
             ->addColumn('actions', function ($row){
@@ -56,9 +54,6 @@ class SettingsController extends Controller
             'purok_name' => 'required|max:255',
         ]);
 
-//        $purok = Purok::with('barangay')->where('barangay_id', $this->brgy())->pluck('purok_name')
-//            ->toArray();
-
         if (!$validator->passes()) {
             return response()->json([
                 'code' => 0, 'error' => $validator->errors()->toArray()
@@ -69,7 +64,7 @@ class SettingsController extends Controller
                 $randomId       =   rand(1,99999);
                 $purok = Purok::insert([
                     'purok_name' => $request->purok_name,
-                    'barangay_id' => $this->brgy(),
+                    'barangay_id' => $this->barangayId(),
                 ]);
 
                 if (!$purok) {

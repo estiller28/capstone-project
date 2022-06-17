@@ -2,15 +2,10 @@
 <x-jet-action-section>
     <x-slot name="title">
         <div class="card-title">
-            <div class="card-label">
                 <b>
                     {{ __('Two Factor Authentication') }}
                 </b>
-
-            </div>
         </div>
-
-
     </x-slot>
 
     <x-slot name="description">

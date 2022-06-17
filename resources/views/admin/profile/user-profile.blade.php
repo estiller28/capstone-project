@@ -26,7 +26,7 @@
                     <div class="card card-primary card-outline">
                         <div class="card-body box-profile">
                             <div class="text-center" id="change_profile">
-{{--                                <img class="profile-user-img img-circle" style="width: 120px; height: 120px;"  src="{{ asset('user/avatar.png') }}" alt="Daniel">--}}
+                                {{--                                <img class="profile-user-img img-circle" style="width: 120px; height: 120px;"  src="{{ asset('user/avatar.png') }}" alt="Daniel">--}}
                                 <img class="profile-user-img img-circle profile_picture" style="width: 120px; height: 120px;"  src="{{ Auth::user()->picture }}" alt="Daniel">
                             </div>
                             <input type="file" id="profile_img" class="form-control" name="profile_image" style="display: none;">
@@ -41,7 +41,7 @@
                                     <b>Mobile:</b> <p class="float-right">09978839185</p>
                                 </li>
                                 <li class="list-group-item">
-                                    <b>Address</b> <p class="float-right">Union Gubat Sorsogon</p>
+                                    <b>Address</b> <p class="float-right">Legazpi City, Albay</p>
                                 </li>
                             </ul>
                         </div>
@@ -105,16 +105,14 @@
                                     </div>
                                 </div>
                                 <!-- /.tab-pane -->
-{{--                                <div class="tab-pane" id="timeline">--}}
-{{--                                    Coming soon..--}}
-{{--                                </div>--}}
-                                <!-- /.tab-pane -->
+                            {{--                                <div class="tab-pane" id="timeline">--}}
+                            {{--                                    Coming soon..--}}
+                            {{--                                </div>--}}
+                            <!-- /.tab-pane -->
 
                                 <div class="tab-pane" id="settings">
-                                    <div class="post">
-                                        <div class="mb-5 mb-5 mb-5 mb-5 p-0 embed-responsive embed-responsive-16by9" style="height: ">
-                                            <iframe class="embed-responsive-item" src="{{ route('profile.show') }}"></iframe>
-                                        </div>
+                                    <div class="mb-5 mb-5 mb-5 mb-5 p-0 embed-responsive embed-responsive-16by9" style="height: ">
+                                        <iframe class="embed-responsive-item" src="{{ route('profile.show') }}"></iframe>
                                     </div>
                                 </div>
                             </div>

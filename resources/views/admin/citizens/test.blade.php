@@ -70,6 +70,7 @@
                                 <td class="table-primary">First Name</td>
                                 <td class="table-primary">Middle Name</td>
                                 <td class="table-primary">Last Name</td>
+                                <td class="table-primary">Date of Birth</td>
                                 <td class="table-primary">Actions</td>
                                 </thead>
                             </table>
@@ -114,15 +115,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <div class="row justify-content-between">
-            <div class="col-md-6">
-                <h2>Add New Product</h2>
-            </div>
-            <div class="col-md-6">
-                <a class="btn btn-primary" href=""> Back</a>
             </div>
         </div>
     </div>
@@ -196,26 +188,29 @@
                     {data: 'first_name', name: 'first_name'},
                     {data: 'middle_name', name: 'middle_name'},
                     {data: 'last_name', name: 'last_name'},
+                    {data: 'date_of_birth', name: 'date_of_birth'},
                     {data: 'actions', name: 'actions'},
                 ]
             })
 
             //Edit citizen
-            $(document).on('click', '#citizen_edit', function(e){
-                e.preventDefault();
+            {{--$(document).on('click', '#citizen_edit', function(e){--}}
+            {{--    e.preventDefault();--}}
 
-                var citizen_id = $(this).data('id');
+            {{--    var citizen_id = $(this).data('id');--}}
 
 
-                $.post('<?= route('citizenGet') ?>', {citizen_id:citizen_id}, function(data){
-                    $('.edit-data').find('input[name="cid"]').val(data.details.id);
-                    $('.edit-data').find('input[name="first_name"]').val(data.details.first_name);
-                    $('.edit-data').find('input[name="middle_name"]').val(data.details.middle_name);
-                    $('.edit-data').find('input[name="last_name"]').val(data.details.last_name);
-                    $('.edit-data').modal('show');
 
-                }, 'json');
-            });
+
+            {{--    $.post('<?= route('citizenGet') ?>', {citizen_id:citizen_id}, function(data){--}}
+            {{--        $('.edit-data').find('input[name="cid"]').val(data.details.id);--}}
+            {{--        $('.edit-data').find('input[name="first_name"]').val(data.details.first_name);--}}
+            {{--        $('.edit-data').find('input[name="middle_name"]').val(data.details.middle_name);--}}
+            {{--        $('.edit-data').find('input[name="last_name"]').val(data.details.last_name);--}}
+            {{--        $('.edit-data').modal('show');--}}
+
+            {{--    }, 'json');--}}
+            {{--});--}}
 
             //Update Citizen
             $('#update-citizen-form').on('submit', function(e) {

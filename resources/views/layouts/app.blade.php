@@ -9,9 +9,7 @@
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
 
-        <!-- Styles -->
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
-
 
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 {{--        <!-- Scripts -->--}}
@@ -36,19 +34,13 @@
         </style>
 {{--        <div class="min-h-screen bg-gray-100">--}}
 
-            <!-- Page Heading -->
-            @if (isset($header))
-                <header class="bg-white shadow px-6">
-                    <div class="container-fluid mx-auto py-2 px-2 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endif
 
 {{--            <!-- Page Content -->--}}
-
-                {{ $slot }}
+        <div class="p-0">
+            {{ $slot }}
         </div>
+
+
 
         @stack('modals')
 

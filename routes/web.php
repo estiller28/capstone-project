@@ -62,7 +62,7 @@ Route::middleware(['auth:sanctum','verified',])->group(function (){
         Route::prefix('citizen')->group(function(){
             //Citizen Controller
             Route::get('/all', [CitizenController::class, 'index'])->name('citizens');
-            Route::get('/edit/{id}', [CitizenController::class, 'edit']);
+            Route::get('/edit/{id}', [CitizenController::class, 'edit'])->name('citizenEdit');
             Route::get('/delete/{id}', [CitizenController::class, 'delete']);
             Route::post('/update/{id}', [CitizenController::class, 'update']);
             Route::get('/add/list', [CitizenController::class, 'addCitizenView'])->name('add.view');

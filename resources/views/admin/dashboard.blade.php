@@ -28,11 +28,11 @@
                     <div class="col-lg-12">
                         <div class="small-box bg-white py-lg-4 px-lg-4">
                             <div class="inner">
-                                <div class="mt-3 mb-2 text-left">
-                                    <h1>Hi <b><span class="text-info">{{ Auth::user()->name }}!</span></b> </h1>
+                                <div class="mt-2 mb-2 text-left">
+                                    <h1>Hi <b><span class="text-info">{{ Auth::user()->name }}</span></b> </h1>
                                 </div>
                                 <div class="text-left">
-                                    <h4 class="text-gray">welcome back!</h4>
+                                    <h4 class="text-gray">Welcome back!</h4>
                                 </div>
                             </div>
                         </div>

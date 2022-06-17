@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Traits\authIdentifier;
 use App\Http\Traits\smsNotification;
 use App\Models\Citizen;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
@@ -12,10 +14,11 @@ use App\Models\User;
 class TestController extends Controller
 {
     use smsNotification;
+    use authIdentifier;
 
     public function index(){
-        $user = User::where('id', Auth::user()->id)->with('citizen')->first();
-        $citizen = Citizen::where('user_id', Auth::user()->id)->with('user')->first();
+        $user = User::where('id', $this->userId())->with('citizen')->first();
+        $citizen = Citizen::where('user_id', $this->userId())->with('user')->first();
         $profilePhoto = $citizen->user->profile_photo_url;
 
         return view('admin.citizens.test', compact('citizen', 'profilePhoto', 'user'));
@@ -47,14 +50,14 @@ class TestController extends Controller
     }
 
     public function getCitizen(){
-        $citizen = Citizen::all('id', 'first_name', 'middle_name', 'last_name');
+        $citizen = Citizen::all('id', 'first_name', 'middle_name', 'last_name', 'date_of_birth');
 
         return DataTables::of($citizen)
             ->addIndexColumn()
             ->addColumn('actions', function ($row){
                 return '<div class="btn-group"
                             <button class="btn btn-primary" data-id=" '.$row['id'].'"
-                            id="citizen_edit"><a href=""><i class="mr-3 text-primary fas fa-edit"></i></a></button>
+                            id=""><a href=" '. route('citizenEdit', $row->id). ' "><i class="mr-3 text-primary fas fa-edit"></i></a></button>
                         </div>
                        <div class="btn-group"
                               <button class="btn btn-primary" data-id="'.$row['id'].'"
